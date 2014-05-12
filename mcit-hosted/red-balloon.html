@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Subtlety is not my strong point</title>
+
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+      font-family: arial, sans-serif;
+      box-sizing: border-box;
+    }
+    sup{
+      font-size: .6em;
+      font-weight: normal;
+    }
+    #content{
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    form,
+    input,
+    button{
+      cursor: none;
+      text-align: center;
+    }
+    button#lucky-button{
+      cursor: pointer;
+    }
+
+    button{
+      background: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+      border: 1px solid #dcdcdc;
+      border-color: rgba(0,0,0,0.1);
+      color: #444 !important;
+      font-size: 11px;
+      margin: 16px 8px;
+      display: inline-block;
+      font-weight: bold;
+      height: 29px;
+      line-height: 29px;
+      min-width: 54px;
+      padding: 0 8px;
+      text-decoration: none !important;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+    }
+    input{
+      width: 100%;
+      color: #222;
+      font: 16px arial, sans-serif;
+      border: solid 1px #666;
+      padding: 5px;
+      margin: -0.0625em 0px 0px;
+      height: 1.25em;
+      width: 100%;
+      text-align: left;
+    }
+
+
+    .simulate-click{
+      background: blue;
+      transition: all .5s ease;
+    }
+    #search-result{
+      display: none;
+    }
+
+  </style>  
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+
+
+
+var objectOfDesire = 'originality'.split('');
+var $searchField;
+var $searchButton;
+var $searchResult;
+
+
+$(document).ready(function(){
+
+  $searchField = $('#search-field');
+  $searchButton = $('#search-button');
+  $searchResult = $('#search-result')
+
+  var revealObjectOfDesire = function () {
+    console.log('half second hath passed');
+    if ($searchField.val().length < objectOfDesire.length){
+      $searchField.val(
+        $searchField.val() + objectOfDesire[$searchField.val().length]
+      );
+      timer();
+    } else {
+      $searchButton.addClass('simulate-click');
+      setTimeout(function(){ 
+        $searchButton.removeClass('simulate-click');
+      }, 200);
+      setTimeout(function(){ 
+        $searchResult.fadeIn();
+      }, 500); 
+    }
+  }
+
+  var timer = function () {
+    setTimeout(function(){
+      revealObjectOfDesire()
+    }, 500)
+  }
+
+  timer();
+
+
+
+});
+
+
+
+  </script>
+</head>
+<body>
+  <div id="content">
+    <h1>not-at-all-biased search <sup>(TM)</sup></h1>
+    <form action="">
+      <input type="text" id="search-field" disabled>
+      <button id="search-button">Naab Search</button>
+      <button id="lucky-button">I'm Feeling Lucky</button>
+    </form>
+    <div id="search-result">
+      <h4>Showing Results for 'originality'</h4>
+      <h2>Did you mean <em>'Kriss Heimanis'</em> ?</h2>
+      <p>If you're looking for someone with a genuine passion for code, design and fun, this (*ahem*) search engine would recommend Kriss Heimanis everytime.</p>
+    </div>
+  </div>
+</body>
+</html>

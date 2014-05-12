@@ -1,0 +1,51 @@
+@import url(http://fonts.googleapis.com/css?family=Marcellus+SC);
+
+body{
+  background: url(http://hdwallpaper.freehdw.com/0006/3d-abstract_other_dragon-game-of-thrones-artwork_55597.jpg) no-repeat !important;
+  background-size: cover;
+  background-attachment: fixed !important;
+}
+.godText,
+.godText h1,
+.godText h2,
+.godText h3,
+.godText h4,
+.godText h5,
+.godText h6,
+.godText p{
+  font-family: 'Marcellus SC', serif !important;  
+  text-align: center;
+  color: #000;
+}
+
+
+.divOutline{
+  display: block;
+  position: absolute; 
+  left: 0; 
+  top: 0; 
+  border: dotted 1px #F00;
+  z-index: 9999;
+  transition: all .5s ease;
+  background: rgba(0,0,0,0.4);
+  cursor: pointer;
+}
+.divOutline :hover{
+  border: solid 1px #0FF;
+  background: rgba(0,0,0,0.8);
+}
+.boxAlert{
+  z-index: 10000; 
+  display: none; 
+  position: fixed;
+  top: 50px; 
+  background: #FFF; 
+  border-radius: 5px; 
+  width: 200px; 
+  padding: 1em;
+}
+.divSelected{
+  border: solid 1px #0FF;
+  background: rgba(0,0,0,0.8);
+  cursor: pointer;
+}
