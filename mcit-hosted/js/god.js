@@ -1,7 +1,6 @@
 var $victim = document;
 var cssId = 'godCss';
-if (!$victim.getElementById(cssId))
-{
+if (!$victim.getElementById(cssId)){
     var head  = $victim.getElementsByTagName('head')[0];
     var link  = $victim.createElement('link');
     link.id   = cssId;
@@ -12,12 +11,10 @@ if (!$victim.getElementById(cssId))
     head.appendChild(link);
 };
 
-
-
 // will need to use all of these variables after doc.ready
 var divs, elems, winWidth, winHeight, winAlertLeft, winPlay, boxWelcome
 
-// alert('Elvis has entered the building ' + winWidth + ' x ' + winHeight);
+alert('Elvis has entered the building ' + winWidth + ' x ' + winHeight);
 
 // generic function to load content into an alert window and then show it (cheats way of queueing functions!)
 var loadAlert = function (content, id) {
