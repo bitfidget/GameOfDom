@@ -59,3 +59,36 @@ Already done
 
 1. webkit audio sound effects
 2. coooool animations for the battle
+
+## Models
+
+### Page
+
+has_many Divs
+
+- url:string
+- title:string
+- favicon:string
+
+### Div
+
+belongs_to Page
+has_many Battles
+has_many Divs through => Scores
+
+- content:string
+- page_id:integer
+
+has_many(:battles, :foreign_key => :winner_id)
+has_many(:conquests, :through => :battles, :source => :loser)
+
+The above *should* allow access to div.battle.score, div.conquests, div.battles, and should also allow you to find a divs conquering divs.
+ 
+### Battle
+
+has_many Divs
+
+- score:integer
+- winner_id:integer
+- loser:integer
+
