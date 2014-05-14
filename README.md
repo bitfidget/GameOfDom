@@ -59,3 +59,30 @@ Already done
 
 1. webkit audio sound effects
 2. coooool animations for the battle
+
+## Models
+
+### Page
+
+has_many Divs
+
+- url:string
+- title:string
+- favicon:string
+
+### Div
+
+belongs_to Page
+has_many Scores
+has_many Divs through => Scores
+
+- content:string
+- page_id
+
+### Score
+
+has_many Divs
+
+- score:integer
+- div 1
+- div 2
