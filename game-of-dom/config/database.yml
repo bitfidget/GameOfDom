@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: game-of-dom_development
+  pool: 5
+  username: kriss
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: game-of-dom_test
+  pool: 5
+  username: kriss
+  password:
+
+# production:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: game-of-dom_production
+#   pool: 5
+#   username: game-of-dom
+#   password:
