@@ -73,16 +73,22 @@ has_many Divs
 ### Div
 
 belongs_to Page
-has_many Scores
+has_many Battles
 has_many Divs through => Scores
 
 - content:string
-- page_id
+- page_id:integer
 
-### Score
+has_many(:battles, :foreign_key => :winner_id)
+has_many(:conquests, :through => :battles, :source => :loser)
+
+The above *should* allow access to div.battle.score, div.conquests, div.battles, and should also allow you to find a divs conquering divs.
+ 
+### Battle
 
 has_many Divs
 
 - score:integer
-- div 1
-- div 2
+- winner_id:integer
+- loser:integer
+
