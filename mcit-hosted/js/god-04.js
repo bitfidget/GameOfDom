@@ -1,50 +1,10 @@
-(function ($) {
-
-  // go through all the divs and append a new div that we can select
-  $.fn.godify = function (options) {
-
-    // defaults
-    var settings = $.extend({
-      children : 3
-    }, options);
-
-    return this.each (function () {
-      if (this.childNodes.length > settings.children){
-        // make the div relative if not already set
-        this.style.position = this.style.position || 'relative';
-        // append the div with a new div of same size
-        var innerWidth = $(this).width() - 2;
-        var innerHeight = $(this).height() - 2;
-        $(this).append('<div class="divOutline" />');
-        $('.divOutline', this).width(innerWidth);
-        $('.divOutline', this).height(innerHeight);
-      };
-    });
-  };
-} ($) );
-
-
 domGame = {
   initialize : function () {
     // inject css
-    $('head').append('<link rel="stylesheet" type="text/css" href="' + projectHost + 'css/god.css">');
-
-    // show welcome message
-    popUp.messageShow('welcome');
-
-    // get all the hostPage divs
-    $('div:visible').godify();
-
-    
-    
-    // controller.gameSelect();
-    // view.gameIntro();
-    // view.showMessage('welcome')
-    
     // message - welcome
     // message - has settings to choose from?
     // message has start button inside that can only be clicked once you hae selected two divs
-    // DONE get all divs according to settings and .godify them (write jquery function)
+    // get all divs according to settings and .godify them (write jquery function)
   },
   battle : function () {
     // 
@@ -53,7 +13,6 @@ domGame = {
 
 popUp = {
   theMessages : function (message) {
-    // colection of all the messages
     var messages = {
       welcome : {
         heading : 'Welcome',
@@ -63,27 +22,11 @@ popUp = {
     }
     return messages[message]
   },
-  messageFetch : function (message) {
+  messageFetch : function () {
     // get the appropriate message frome ROR via ajax (this needs to come as full html string)
-    $.ajax({
-      type: 'GET',
-      dataType: 'json',
-      url: (projectHost + messagePath + message),
-      success : function (ajaxData){
-        //$('#godBox').append(ajaxData.html);
-        console.log(ajaxData)
-      },
-      error : function(){
-        // ajax fetch failed
-        console.log('message fetch fail')
-        $('#godBox').append('<h1>I HATE AJAX</h1>');
-      }
-    });
   },
-  messageShow : function (message) {
+  messageShow : function () {
     // display the message on the screen
-    winBody.append('<div id="godBox" class="' + message + '" />');
-    popUp.messageFetch(message);
   },
   messageHide : function () {
     // remove the message from the screen
@@ -143,7 +86,11 @@ view = {
 controller = {
   gameInitialize : function () {
     // load our stylesheet to the host page
+    $('head').append('<link rel="stylesheet" type="text/css" href="http://modelcitizen.com.au/GOD/css/god.css">');
     
+    controller.gameSelect();
+    view.gameIntro();
+    view.showMessage('welcome')
 
   },
   gameSelect : function () {
@@ -183,8 +130,6 @@ controller = {
 };
 
 var divs, elems, winWidth, winHeight, winAlertLeft, winBody, boxWelcome
-var projectHost = 'http://www.modelcitizen.com.au/GOD/'
-var messagePath = 'ajax-messages/'
 
 $(document).ready(function(){
   winWidth = $(window).width();
@@ -195,5 +140,5 @@ $(document).ready(function(){
 
   // kick-off
   
-  domGame.initialize();
+  controller.gameInitialize();
 });

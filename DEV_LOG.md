@@ -17,11 +17,13 @@
 ### Planning and TDD of ROR models
 - further ROR planning, identified issues with expected models, identified need for better realtionships
 - TDD of ROR framework and models
-
-### To Do
-- finish ROR TDD
+- finish ROR TDD #kind of - needs more tests and fixes
 - establish ROR controllers and very basic views
 - start fitting JS into framework
+
+- to carry on:
+-need to redo the message box - append it to screen ONCE, then whenever I need to show a get it's content via Ajax, append it to the box, show the box. Also set up listeners for any buttons within the box at this point also. Then when message is no longer needed, fadeOut the box.
+-find out why ajax is not working...
 
 ## Thursday 16th May
 
