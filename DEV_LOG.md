@@ -27,8 +27,10 @@
 
 ## Thursday 16th May
 
-### To Do - JS
-- lots of JS - get the battle working
+- lots of JS - get the battle initialized
+- ongoing issues with ajax - not able to make an ajax call to my server, from another (not with any reliability anyway). It very annoyingly works sometimes... but not often.
+- wrote a couple of JQuery functions that so work though...
+- Begining to wonder if this is a good idea at all - appears to me that it's going to be impossible to make this work with any consistency at all
 
 ## Friday 17th May
 
