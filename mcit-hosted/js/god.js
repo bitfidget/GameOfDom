@@ -28,21 +28,16 @@
     return this.each (function () {
       var hash = [];
       $('.GoDified').remove();
-      $('.GoDified').remove();
       $(this).find('div').each (function () {
         hash.push($(this));
         console.log(hash);
-      })
-      // $(this).('div').each (function () {
-      //   console.log(this)
-      //   console.log($(this))
-
-      // })
-      
-      // debugger
-      
-      
-
+      });
+      $(this).removeAttr('id').removeAttr('class').removeAttr('style');
+      if ($('.GoDDivONE').length > 0){
+        $(this).addClass('GoDDivTWO');
+      } else {
+        $(this).addClass('GoDDivONE');
+      };
 
     });
   };
@@ -90,7 +85,9 @@ var domGame = {
 
   // redraw the candidate divs so they're ready to fight
   redraw : function () {
+    $('div.GoDified').not('.GoDCandidate').parent().remove();
     $('.GoDCandidate').parent().GoDRender();
+    $GoDBox.fadeOut();
   },
   battle : function () {
     // 

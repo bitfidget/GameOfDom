@@ -53,7 +53,35 @@ body{
 #GoDBox button{
   display: none;
 }
-
+/* rerender the  selected divs */
+.GoDDivONE,
+.GoDDivTWO{
+  position: absolute;
+  left: 3%;
+  width: 40%;
+  bottom: 10px;
+  display: block;
+  border-left: solid 8px rgba(0,0,0,0.6);
+  border-bottom: solid 10px rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.5);
+  height: 20px;
+}
+.GoDDivTWO{
+  left: 53%;
+  width: 40%;
+}
+.GoDDivONE div,
+.GoDDivTWO div{
+  position: absolute;
+  left: 5%;
+  width: 88%;
+  bottom: 10px;
+  display: block;
+  border-left: solid 8px rgba(0,0,0,0.6);
+  border-bottom: solid 10px rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.5);
+  height: 20px;
+}
 
 
 
