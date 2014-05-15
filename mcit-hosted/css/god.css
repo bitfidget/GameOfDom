@@ -5,21 +5,22 @@ body{
   background-size: cover;
   background-attachment: fixed !important;
 }
-.godText,
-.godText h1,
-.godText h2,
-.godText h3,
-.godText h4,
-.godText h5,
-.godText h6,
-.godText p{
+
+/* generic style to hopefully not overlap with existing style */
+.GoDText,
+.GoDText h1,
+.GoDText h2,
+.GoDText h3,
+.GoDText h4,
+.GoDText h5,
+.GoDText h6,
+.GoDText p{
   font-family: 'Marcellus SC', serif !important;  
   text-align: center;
   color: #000;
 }
-
-
-.divOutline{
+/* the selection boxes */
+.GoDified{
   display: block;
   position: absolute; 
   left: 0; 
@@ -27,23 +28,38 @@ body{
   border: dotted 1px #F00;
   z-index: 9999;
   transition: all .5s ease;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.2);
   cursor: pointer;
 }
-.divOutline :hover{
+.GoDified :hover{
   border: solid 1px #0FF;
   background: rgba(0,0,0,0.8);
 }
-.boxAlert{
+.GoDCandidate{
+  border: solid 1px #000;
+  background: rgba(255,0,0,0.8);
+}
+/* the popup boxes */
+#GoDBox{
   z-index: 10000; 
   display: none; 
   position: fixed;
   top: 50px; 
   background: #FFF; 
   border-radius: 5px; 
-  width: 200px; 
+  width: 300px; 
   padding: 1em;
 }
+#GoDBox button{
+  display: none;
+}
+
+
+
+
+
+
+
 .divSelected{
   border: solid 1px #0FF;
   background: rgba(0,0,0,0.8);
