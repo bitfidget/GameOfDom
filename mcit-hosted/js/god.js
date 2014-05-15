@@ -103,14 +103,16 @@ var popUp = {
     $.ajax({
       type: 'GET',
       dataType: 'json',
-      url: (projectHost + messagePath + message),
+      crossDomain: true,
+      url: (projectHost + messagePath + message + '/'),
       success : function (ajaxData){
         $GoDBox.append(ajaxData.html);
         popUp.messageFadeIn();
       },
       error : function(){
         // ajax fetch failed
-        console.log('message fetch fail')
+        $GoDBox.append('<button>this may not work on this page but go anyway</button>');
+        popUp.messageFadeIn();
       }
     });
   },

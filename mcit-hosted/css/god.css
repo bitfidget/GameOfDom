@@ -65,6 +65,8 @@ body{
   border-bottom: solid 10px rgba(0,0,0,0.7);
   background: rgba(0,0,0,0.5);
   height: 20px;
+  -webkit-perspective: 1000em;
+  -webkit-transform: skew(x25deg);
 }
 .GoDDivTWO{
   left: 53%;
