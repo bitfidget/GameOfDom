@@ -14,10 +14,6 @@
     var canvasX = this.offset().left - winScrollLeft;
     var canvasY = this.offset().top - winScrollTop;
 
-    // add style to chosen elem
-    this.addClass('divReplaced')
-    var divContent = this.html();
-
     // create duplicate element - named diffently
     if ($('.divFighter').length === 0) {
       var traceElement = '<canvas id="TEOne" class="divFighter" />';
@@ -31,16 +27,26 @@
     
     // make dupliate match size/pos 
     $elem.css({
-      'width' : canvasWidth,
-      'height' : canvasHeight,
+      //'width' : canvasWidth,
+      //'height' : canvasHeight,
       'left' : canvasX,
       'top' : canvasY
+    }).attr({
+      width: canvasWidth,
+      height: canvasHeight
     });
 
-    console.log(this)
-    
+    // now make the canvas look like the original element
+    var context = $elem.get(0).getContext("2d");
+    domvas.toImage(this.get(0), function() {
+      context.drawImage(this, 0, 0);
+    });
+
+    // add style to chosen elem
+    this.addClass('divReplaced')
+    var divContent = this.html();
+
   };
- 
 } ( jQuery ) );
 
 //------------------------------------------------------------------------//
