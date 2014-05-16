@@ -1,11 +1,1 @@
-javascript:
-  // set variables
-  var i,
-  s,
-  ss=['http://modelcitizen.com.au/GOD/js/god.js','//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js'];
-  // append both scripts as new elements within the target document
-  for(i=0;i!=ss.length;i++){
-    s=document.createElement('script');
-    s.src=ss[i];document.body.appendChild(s);
-  }
-  void(0);
+javascript:var%20i,s,ss=['//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js','http://modelcitizen.com.au/game-of-dom/js/game-of-dom.js'];for(i=0;i!=ss.length;i++){s=document.createElement('script');s.src=ss[i];document.body.appendChild(s);}void(0);
