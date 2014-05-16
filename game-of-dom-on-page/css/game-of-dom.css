@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Marcellus+SC);
 
 body{
-  background: #333 !important;
+  background: #333;
 }
 
 /* generic style to hopefully not overlap with existing style */
@@ -17,25 +17,18 @@ body{
   text-align: center;
   color: #000;
 }
-/* the selection boxes */
-.GoDified{
-  display: block;
-  position: absolute; 
-  left: 0; 
-  top: 0; 
-  border: dotted 1px #F00;
-  z-index: 9999;
-  transition: all .5s ease;
-  background: rgba(0,0,0,0.2);
-  cursor: pointer;
+/* the selected boxes */
+.divFighter{
+  position: absolute !important;
+  background: #F60 !important;
+  display: block !important;
+  z-index: 10000000 !important;
 }
-.GoDified :hover{
-  border: solid 1px #0FF;
-  background: rgba(0,0,0,0.8);
-}
-.GoDCandidate{
-  border: solid 1px #000;
-  background: rgba(255,0,0,0.8);
+.divReplaced{
+  background: #333 !important;
+  -moz-box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
+  -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
 }
 /* the popup boxes */
 #sanityTest{

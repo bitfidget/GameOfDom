@@ -1,3 +1,37 @@
+(function ( $ ) {
+
+//------------------------------------------------------------------------//
+// create a canvas element that duplocates the element selected
+//------------------------------------------------------------------------//
+ 
+  $.fn.dupliCanvas = function () {
+
+    var winScrollLeft = $(window).scrollLeft();   
+    var winScrollTop = $(window).scrollTop();
+    var canvasWidth = this.width();
+    var canvasHeight = this.height();
+    var canvasX = this.offset().left - winScrollLeft;
+    var canvasY = this.offset().top - winScrollTop;
+
+    this.addClass('divReplaced')
+
+    var traceElement = '<div id="TEOne" class="divFighter" />'
+    winBody.append(traceElement);
+
+    $elem = $('#TEOne')
+    $elem.css({
+      'width' : canvasWidth,
+      'height' : canvasHeight,
+      'left' : canvasX,
+      'top' : canvasY
+    });
+
+    console.log(this)
+    
+  };
+ 
+} ( jQuery ) );
+
 //------------------------------------------------------------------------//
 // variables that will be required all over the place
 //------------------------------------------------------------------------//
@@ -34,9 +68,13 @@ var domGame = {
 
   },
   listen : function () {
-    
+    $(document).click( function (event) {
+      event.preventDefault();
+      console.log('clicked on ', event.target);
+      $(event.target).dupliCanvas();
+    });
   }
-}
+};
 
 
 //------------------------------------------------------------------------//
