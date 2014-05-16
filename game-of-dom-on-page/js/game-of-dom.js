@@ -6,6 +6,7 @@
  
   $.fn.dupliCanvas = function () {
 
+    // get selected element x,y pos and width,height
     var winScrollLeft = $(window).scrollLeft();   
     var winScrollTop = $(window).scrollTop();
     var canvasWidth = this.outerWidth();
@@ -13,14 +14,22 @@
     var canvasX = this.offset().left - winScrollLeft;
     var canvasY = this.offset().top - winScrollTop;
 
+    // add style to chosen elem
     this.addClass('divReplaced')
-    debugger
-    var traceElement = '<div id="TEOne" class="divFighter" />'
-    winBody.append(traceElement);
-
     var divContent = this.html();
 
-    $elem = $('#TEOne')
+    // create duplicate element - named diffently
+    if ($('.divFighter').length === 0) {
+      var traceElement = '<canvas id="TEOne" class="divFighter" />';
+      winBody.append(traceElement);
+      var $elem = $('#TEOne')
+    } else {
+      traceElement = '<canvas id="TETwo" class="divFighter" />';
+      winBody.append(traceElement);
+      $elem = $('#TETwo')
+    };
+    
+    // make dupliate match size/pos 
     $elem.css({
       'width' : canvasWidth,
       'height' : canvasHeight,
@@ -42,7 +51,6 @@ var messagePath = 'ajax-messages/';
 var winWidth, winHeight, winAlertLeft, winBody, currentMsg, reload;
 var $GDMessageContainer = 0;
 var sanityTest = '<div id="sanityTest"/>';
-
 
 //------------------------------------------------------------------------//
 // main flow of the script all comes from domGame
@@ -70,10 +78,14 @@ var domGame = {
 
   },
   listen : function () {
+    // register a click on any elem
     $(document).click( function (event) {
       event.preventDefault();
-      console.log('clicked on ', event.target);
-      $(event.target).dupliCanvas();
+      // stop listeing if 2 elems already selected
+      if ($('.divFighter').length < 2) {
+        console.log('clicked on ', event.target);
+        $(event.target).dupliCanvas();
+      };
     });
   }
 };
