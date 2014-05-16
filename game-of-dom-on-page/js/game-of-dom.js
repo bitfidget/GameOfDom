@@ -16,16 +16,6 @@
 
     var recreate = this.get(0);
 
-
-
-    this.addClass('recreateMe');
-
-
-    var recreateMe = winBody.find('recreateMe').last();
-
-
-    debugger
-
     html2canvas(recreate, {
       onrendered: function(canvas) {
         winBody.append(canvas);
