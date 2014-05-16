@@ -20,8 +20,7 @@ body{
 /* the selected boxes */
 .divFighter{
   position: absolute !important;
-/*  background: rgba(255,255,255,0.2) !important;
-  display: block !important;*/
+  display: block !important;
   z-index: 10000000 !important;
 }
 .divReplaced{

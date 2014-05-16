@@ -4,7 +4,7 @@
 // create a canvas element that duplocates the element selected
 //------------------------------------------------------------------------//
  
-  $.fn.dupliCanvas = function () {
+  $.fn.dupliCanvas = function (snapChat) {
 
     // get selected element x,y pos and width,height
     var winScrollLeft = $(window).scrollLeft();   
@@ -14,9 +14,9 @@
     var canvasX = this.offset().left - winScrollLeft;
     var canvasY = this.offset().top - winScrollTop;
 
-    var recreate = this.get(0);
+    console.log(snapChat)
 
-    html2canvas(recreate, {
+    html2canvas(document.getElementById(snapChat), {
       onrendered: function(canvas) {
         winBody.append(canvas);
         var newCanvas = winBody.find('canvas').last();
@@ -30,6 +30,7 @@
         } else {
           newCanvas.attr('id', 'TeTTwo');
         };
+
       },
       width: canvasWidth,
       height: canvasHeight
@@ -38,7 +39,6 @@
     
 
     
-
 
     // create duplicate element - named diffently
     // if ($('.divFighter').length === 0) {
@@ -113,10 +113,24 @@ var domGame = {
     // register a click on any elem
     $(document).click( function (event) {
       event.preventDefault();
+
+      var snapChat = 'hotdogs';
+
+
+
+      // add id to selected id if not already
+      if ($(event.target).is('[id]')){
+        snapChat = $(event.target).attr('id');
+      } else {
+        $(event.target).attr('id', snapChat);
+      }
+
+
+
       // stop listeing if 2 elems already selected
       if ($('.divFighter').length < 2) {
         console.log('clicked on ', event.target);
-        $(event.target).dupliCanvas();
+        $(event.target).dupliCanvas(snapChat);
       };
     });
   }
