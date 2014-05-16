@@ -114,9 +114,13 @@ var domGame = {
     $(document).click( function (event) {
       event.preventDefault();
 
-      var snapChat = 'hotdogs';
-
-
+      // need to set up uniq id to use
+      var snapChat
+      if ($('#hotdogs').length == 0) {
+        snapChat = 'hotdogs';
+      } else {
+        snapChat = 'butterfly';
+      };
 
       // add id to selected id if not already
       if ($(event.target).is('[id]')){
@@ -124,8 +128,6 @@ var domGame = {
       } else {
         $(event.target).attr('id', snapChat);
       }
-
-
 
       // stop listeing if 2 elems already selected
       if ($('.divFighter').length < 2) {
