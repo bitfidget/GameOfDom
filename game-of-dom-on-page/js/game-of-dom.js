@@ -8,15 +8,17 @@
 
     var winScrollLeft = $(window).scrollLeft();   
     var winScrollTop = $(window).scrollTop();
-    var canvasWidth = this.width();
-    var canvasHeight = this.height();
+    var canvasWidth = this.outerWidth();
+    var canvasHeight = this.outerHeight();
     var canvasX = this.offset().left - winScrollLeft;
     var canvasY = this.offset().top - winScrollTop;
 
     this.addClass('divReplaced')
-
+    debugger
     var traceElement = '<div id="TEOne" class="divFighter" />'
     winBody.append(traceElement);
+
+    var divContent = this.html();
 
     $elem = $('#TEOne')
     $elem.css({
