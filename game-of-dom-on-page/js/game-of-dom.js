@@ -5,6 +5,7 @@ var projectHost = 'http://modelcitizen.com.au/game-of-dom/';
 var messagePath = 'ajax-messages/';
 var winWidth, winHeight, winAlertLeft, winBody, currentMsg, reload;
 var $GDMessageContainer = 0;
+var sanityTest = '<div id="sanityTest"/>';
 
 
 //------------------------------------------------------------------------//
@@ -23,11 +24,17 @@ var domGame = {
     winAlertLeft = ((winWidth - 300) / 2);
     winBody = $('body');
 
+    winBody.append(sanityTest);
     $('head').append('<link rel="stylesheet" type="text/css" href="' + projectHost + 'css/game-of-dom.css">'); 
 
     currentMsg = 'welcome';
     popUp.messageFetch(currentMsg);
 
+    this.listen();
+
+  },
+  listen : function () {
+    
   }
 }
 
@@ -45,13 +52,14 @@ var popUp = {
   },
   
   messageFetch : function (currentMsg) {
+    var url = (projectHost + messagePath + currentMsg + '/json.txt')
     $.ajax({
       type: 'GET',
       dataType: 'json',
       crossDomain: true,
-      url: (projectHost + messagePath + currentMsg + '/'),
+      url: url,
       success : function (ajaxData){
-        popUp.messageShow(ajaxData);
+        popUp.messageShow(ajaxData.html);
       },
       error : function(){
         console.log('ajax popUp.messageFetch(' + currentMsg + ') error')
@@ -72,13 +80,13 @@ var popUp = {
     };
     
     // check if stylesheet loaded before running fadeIn()
-    if ($GDMessageContainer.is(':hidden')) {
+    if ($('#sanityTest').is(':hidden')) {
       $GDMessageContainer.fadeIn(1000);
       clearInterval(reload)
     } else {
-      reload = setInterval(function(){
+      reload = setTimeout(function(){
+        console.log('stylesheet not loaded yet - retry')
         popUp.messageShow(currentMsg)
-        console.log(currentMsg)
       }, 500);
     };
     $GDMessageContainer.append(currentMsg);

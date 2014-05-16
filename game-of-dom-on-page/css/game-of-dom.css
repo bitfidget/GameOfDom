@@ -38,6 +38,9 @@ body{
   background: rgba(255,0,0,0.8);
 }
 /* the popup boxes */
+#sanityTest{
+  display: none;
+}
 #GDMessageContainer{
   z-index: 10000; 
   display: none; 
