@@ -14,36 +14,72 @@
     var canvasX = this.offset().left - winScrollLeft;
     var canvasY = this.offset().top - winScrollTop;
 
-    // create duplicate element - named diffently
-    if ($('.divFighter').length === 0) {
-      var traceElement = '<canvas id="TEOne" class="divFighter" />';
-      winBody.append(traceElement);
-      var $elem = $('#TEOne')
-    } else {
-      traceElement = '<canvas id="TETwo" class="divFighter" />';
-      winBody.append(traceElement);
-      $elem = $('#TETwo')
-    };
-    
-    // make dupliate match size/pos 
-    $elem.css({
-      //'width' : canvasWidth,
-      //'height' : canvasHeight,
-      'left' : canvasX,
-      'top' : canvasY
-    }).attr({
+    var recreate = this.get(0);
+
+
+
+    this.addClass('recreateMe');
+
+
+    var recreateMe = winBody.find('recreateMe').last();
+
+
+    debugger
+
+    html2canvas(recreate, {
+      onrendered: function(canvas) {
+        winBody.append(canvas);
+        var newCanvas = winBody.find('canvas').last();
+        newCanvas.addClass('divFighter');
+        newCanvas.css({
+          'left' : canvasX,
+          'top' : canvasY
+        });
+        if ($('.divFighter').length == 1) {
+          newCanvas.attr('id', 'TeTOne');
+        } else {
+          newCanvas.attr('id', 'TeTTwo');
+        };
+      },
       width: canvasWidth,
       height: canvasHeight
     });
 
+    
+
+    
+
+
+    // create duplicate element - named diffently
+    // if ($('.divFighter').length === 0) {
+    //   var traceElement = '<canvas id="TEOne" class="divFighter" />';
+    //   winBody.append(traceElement);
+    //   var $elem = $('#TEOne')
+    // } else {
+    //   traceElement = '<canvas id="TETwo" class="divFighter" />';
+    //   winBody.append(traceElement);
+    //   $elem = $('#TETwo')
+    // };
+    
+    // make dupliate match size/pos 
+    // $elem.css({
+    //   //'width' : canvasWidth,
+    //   //'height' : canvasHeight,
+    //   'left' : canvasX,
+    //   'top' : canvasY
+    // }).attr({
+    //   width: canvasWidth,
+    //   height: canvasHeight
+    // });
+
     // now make the canvas look like the original element
-    var context = $elem.get(0).getContext("2d");
-    domvas.toImage(this.get(0), function() {
-      context.drawImage(this, 0, 0);
-    });
+    // var context = $elem.get(0).getContext("2d");
+    // domvas.toImage(this.get(0), function() {
+    //   context.drawImage(this, 0, 0);
+    // });
 
     // add style to chosen elem
-    this.addClass('divReplaced')
+    //this.addClass('divReplaced')
     var divContent = this.html();
 
   };
