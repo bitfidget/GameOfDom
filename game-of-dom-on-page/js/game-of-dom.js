@@ -112,7 +112,7 @@
   $.fn.findBattleElement = function () {
 
     var current = this
-    
+
     var findLast = function () {
       if ( current.children().length > 0 ) {
         if ( current.children().last().is('br, p, span, td, ul, ol, li, tr, table, a, img, video, div, section, article, footer, header') ) {
@@ -123,50 +123,27 @@
           findLast();
         }
       } else {
-        return current;
+        return current
       }
     }
 
     findLast()
 
-
-      //     if element has children
-      //   if last element is (type)
-      //     element = last element
-      //     restart
-      //   else
-      //     last element delete
-      //     restart
-      // else
-      //   element = element
-
-
-
-      // if (self.children().length > 0) {
-      //   var lastOfChildren = self.children().last();
-      //   if (lastOfChildren.children().length > 0) {
-      //     self.battleElement = lastOfChildren.children().last();
-      //   } else {
-      //     self.battleElement = lastOfChildren;
-      //   }
-      // } else {
-      //   self.battleElement = self;
-      // };
   };
 
   $.fn.setPower = function () {
     if (this.is('br, p, span, td') ) {
-        return = 50
+        return 50
       } else if (this.is('ul, ol, li, tr, table') ) {
-        return = 75
-      } else if (return.is('a') ) {
-        return = 150
-      } else if (return.is('img, video') ) {
-        return = 200
-      } else if (return.is('div, section, article') ) {
-        return = 120
-      } else if (return.is('footer, header') ) {
-        return = 150
+        return 75
+      } else if (this.is('a') ) {
+        return 150
+      } else if (this.is('img, video') ) {
+        return 200
+      } else if (this.is('div, section, article') ) {
+        return 120
+      } else if (this.is('footer, header') ) {
+        return 150
       }
   };
 
@@ -280,42 +257,22 @@ var domGame = {
         whichSide = ( (winWidth/4) * 3);
       };
       // set their rest positions
-      self.restposition = {
+      self.restPosition = {
         left : ( whichSide - (self.outerWidth()/2) ) + 'px',
         top : ( (winWidth/4) - (self.outerWidth()/2) ) + 'px'
       };
-      // this will all move to a function of it's own
       // get last child element for battle
-      self.battleElement = self.findBattleElement()
+      //self.battleElement = self.findBattleElement();
+      self.battleElement = self
       // calculate strenght of battleelement
-      // do this as a function also
-      self.battlePower = self.battleElement.setPower()
-
-      if (self.battleElement.is('br, p, span, td') ) {
-        self.battlePower = 50
-      } else if (self.battleElement.is('ul, ol, li, tr, table') ) {
-        self.battlePower = 75
-      } else if (self.battleElement.is('a') ) {
-        self.battlePower = 150
-      } else if (self.battleElement.is('img, video') ) {
-        self.battlePower = 200
-      } else if (self.battleElement.is('div, section, article') ) {
-        self.battlePower = 120
-      } else if (self.battleElement.is('footer, header') ) {
-        self.battlePower = 150
-      }
+      self.battlePower = self.battleElement.setPower();
       // self battleHealth
-    });
-
-  
-
-    $.each(fighters, function(i, value) {
-      value.jObject.css(value.restposition)
-      value.jObject.addClass('tossing');
+      self.battleHealth = 100;
+      // move to positions
+      self.css(self.restPosition);
+      self.addClass('tossing');
     });
     
-
-
     console.log('game staged');
 
     setTimeout(function () {
@@ -329,71 +286,7 @@ var domGame = {
   }
 };
 
-// fight {
-//   $TEOne : {
-//     restposition : {
-//       left : left,
-//       top : top
-//     },
-//     battleElement : html,
-//     battlePower : 456,
-//     battleStrength : 100%,
-//   }
-// }
-
 var fighters = {}
-
-// var fighters = {
-//   setup : function (hash, fighter) {
-//     var fWidth = fighter.outerWidth();
-//     var fHeight = fighter.outerHeight();
-//     if (hash = 'one') {
-//       var fXRest = ( (winWidth/4) - (fWidth/2) );
-//     } else {
-//       var fXRest = ( ( (winWidth/4) * 3 ) - (fWidth/2) );
-//     }
-//     var fYRest = ( (winHeight/2) - (fHeight/2) );
-
-//     fight[hash] = {
-//       jObject : fighter,
-//       restposition : {
-//         'left' : fXRest + 'px',
-//         'top' : fYRest + 'px'
-//       }
-//     }
-//   }
-// } 
-
-var fighterOne = {
-  stage : function (fighter) {
-    var fWidth = fighter.outerWidth();
-    var fHeight = fighter.outerHeight();
-    var fXRest = ( (winWidth/4) - (fWidth/2) );
-    var fYRest = ( (winHeight/2) - (fHeight/2) );
-
-    fighter.css({
-      'left' : fXRest + 'px',
-      'top' : fYRest + 'px'
-    });
-    fighter.addClass('tossing')
-  }
-};
-
-var fighterTwo = {
-  stage : function (fighter) { 
-    var fWidth = fighter.outerWidth();
-    var fHeight = fighter.outerHeight();
-    var fXRest = ( ( (winWidth/4) * 3 ) - (fWidth/2) );
-    var fYRest = ( (winHeight/2) - (fHeight/2) );
-
-    fighter.css({
-      'left' : fXRest + 'px',
-      'top' : fYRest + 'px'
-    });
-    fighter.addClass('tossing')
-  }
-};
-
 
 //------------------------------------------------------------------------//
 // all game messages added to $GDMessageContainer which is appended to body
