@@ -215,23 +215,53 @@ var domGame = {
         whichSide = (winWidth/4);
       } else {
         whichSide = ( (winWidth/4) * 3);
-      }
+      };
       // set their rest positions
       self.restposition = {
         left : ( whichSide - (self.outerWidth()/2) ) + 'px',
         top : ( (winWidth/4) - (self.outerWidth()/2) ) + 'px'
-      }
+      };
+      // this will all move to a function of it's own
       // get last child element for battle
-      self.battleElement = self.children
 
+      
+
+      if ( ( $objectOfHate.is("div,ul,ol,section,article") === true ) && ( $objectOfHate.children().length > 0 ) ) {
+      $objectOfHate = $objectOfHate.children().last();
+      getRevenge.killThemAll();
+    }
+
+
+      if (self.children().length > 0) {
+        var lastOfChildren = self.children().last();
+        if (lastOfChildren.children().length > 0) {
+          self.battleElement = lastOfChildren.children().last();
+        } else {
+          self.battleElement = lastOfChildren;
+        }
+      } else {
+        self.battleElement = self;
+      };
+      // calculate strenght of battleelement
+      if (self.battleElement.is('br, p, span, td') ) {
+        self.battlePower = 50
+      } else if (self.battleElement.is('ul, ol, li, tr, table') ) {
+        self.battlePower = 75
+      } else if (self.battleElement.is('a') ) {
+        self.battlePower = 150
+      } else if (self.battleElement.is('img, video') ) {
+        self.battlePower = 200
+      } else if (self.battleElement.is('div, section, article') ) {
+        self.battlePower = 120
+      } else if (self.battleElement.is('footer, header') ) {
+        self.battlePower = 150
+      }
     });
 
-debugger
+  
 
-    fighters.setup('one', $TEOne);
-    fighters.setup('two', $TETwo);
-
-    $.each(fight, function(name, value) {
+    $.each(fighters, function(i, value) {
+      debugger
       value.jObject.css(value.restposition)
       value.jObject.addClass('tossing');
     });
