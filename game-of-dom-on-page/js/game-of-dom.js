@@ -270,6 +270,9 @@ var domGame = {
       // get last child element for battle
       self.battleElement = self.findBattleElement()
       // calculate strenght of battleelement
+      // do this as a function also
+      //self.battlePower = self.battleElement.setPower()
+
       if (self.battleElement.is('br, p, span, td') ) {
         self.battlePower = 50
       } else if (self.battleElement.is('ul, ol, li, tr, table') ) {
@@ -283,6 +286,7 @@ var domGame = {
       } else if (self.battleElement.is('footer, header') ) {
         self.battlePower = 150
       }
+      // self battleHealth
     });
 
   
