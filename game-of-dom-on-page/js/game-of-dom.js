@@ -282,6 +282,21 @@ var domGame = {
   },
 
   turn : function () {
+
+    setTimeout(function () {
+      $.each(fighters, function(i, value) {
+        var self = fighters[i];
+        var whichWay;
+        if (i === '1') {
+          whichWay = 'slideRight';
+        } else {
+          whichWay = 'slideLeft';
+        };
+        debugger
+        self.addClass(whichWay);
+      });
+    }, 5000);
+    
     
   }
 };

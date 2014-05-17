@@ -158,43 +158,43 @@ slideLeft
 
 @keyframes slideLeft {
   0% {
-    transform: translateX(150%);
+    transform: translateX(0%);
   }
   50%{
-    transform: translateX(-8%);
+    transform: translateX(-108%);
   }
   65%{
-    transform: translateX(4%);
+    transform: translateX(-96%);
   }
   80%{
-    transform: translateX(-4%);
+    transform: translateX(-104%);
   }
   95%{
-    transform: translateX(2%);
+    transform: translateX(-98%);
   }     
   100% {
-    transform: translateX(0%);
+    transform: translateX(-100%);
   }
 }
 
 @-webkit-keyframes slideLeft {
   0% {
-    -webkit-transform: translateX(150%);
+    -webkit-transform: translateX(0%);
   }
   50%{
-    -webkit-transform: translateX(-8%);
+    -webkit-transform: translateX(-108%);
   }
   65%{
-    -webkit-transform: translateX(4%);
+    -webkit-transform: translateX(-96%);
   }
   80%{
-    -webkit-transform: translateX(-4%);
+    -webkit-transform: translateX(-104%);
   }
   95%{
-    -webkit-transform: translateX(2%);
+    -webkit-transform: translateX(-98%);
   }     
   100% {
-    -webkit-transform: translateX(0%);
+    -webkit-transform: translateX(-100%);
   }
 }
 
