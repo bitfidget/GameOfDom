@@ -152,7 +152,25 @@
       // } else {
       //   self.battleElement = self;
       // };
-  }
+  };
+
+  $.fn.setPower = function () {
+    if (this.is('br, p, span, td') ) {
+        return = 50
+      } else if (this.is('ul, ol, li, tr, table') ) {
+        return = 75
+      } else if (return.is('a') ) {
+        return = 150
+      } else if (return.is('img, video') ) {
+        return = 200
+      } else if (return.is('div, section, article') ) {
+        return = 120
+      } else if (return.is('footer, header') ) {
+        return = 150
+      }
+  };
+
+
 } ( jQuery ) );
 
 //------------------------------------------------------------------------//
@@ -271,7 +289,7 @@ var domGame = {
       self.battleElement = self.findBattleElement()
       // calculate strenght of battleelement
       // do this as a function also
-      //self.battlePower = self.battleElement.setPower()
+      self.battlePower = self.battleElement.setPower()
 
       if (self.battleElement.is('br, p, span, td') ) {
         self.battlePower = 50
