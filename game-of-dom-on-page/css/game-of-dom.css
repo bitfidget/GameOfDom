@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Marcellus+SC);
 
 body{
-  background: #333;
+  background: #E0E0E0;
 }
 
 /* generic style to hopefully not overlap with existing style */
@@ -19,23 +19,54 @@ body{
 }
 /* the selected boxes */
 .divFighter{
-  position: absolute !important;
-  display: block !important;
-  z-index: 10000000 !important;
+  position: absolute;
+  display: block;
+  z-index: 100000000;
+  transition: all .5s ease;
+  -moz-box-shadow:  0 0 10px rgba(0,0,0,0.5);
+  -webkit-box-shadow:  0 0 10px rgba(0,0,0,0.5);
+  box-shadow:  0 0 10px rgba(0,0,0,0.5);
 }
-.divReplaced{
+/* fade-out elems that have already been selceted */
+.domCloned{
   background: #333 !important;
   -moz-box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
   -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
   box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
-  color: #333 !important;
+  color: #444 !important;
 }
+.domCloned img,
+img.domCloned{
+  background: #222 !important;
+  opacity: 0.4 !important;
+  -webkit-filter: blur(10px);
+  -webkit-filter: grayscale(100%);
+}
+.domCloned p,
+.domCloned h1,
+.domCloned h2,
+.domCloned h3,
+.domCloned h4,
+.domCloned h5,
+.domCloned h6,
+.domCloned a{
+  color: #444 !important;
+}
+#domCrowd{
+  position: absolute;
+  display: none;
+  z-index: 1000000;
+  background: rgba(0,0,0,0.4);
+  top: 0;
+  left: 0;
+}
+
 /* the popup boxes */
 #sanityTest{
   display: none;
 }
 #GDMessageContainer{
-  z-index: 10000; 
+  z-index: 10000000; 
   display: none; 
   position: fixed;
   top: 50px; 
