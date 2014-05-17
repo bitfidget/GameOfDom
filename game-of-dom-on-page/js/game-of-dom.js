@@ -133,17 +133,17 @@
 
   $.fn.setPower = function () {
     if (this.is('br, p, span, td') ) {
-        return 50
+        return 20
       } else if (this.is('ul, ol, li, tr, table') ) {
-        return 75
+        return 25
       } else if (this.is('a') ) {
-        return 150
+        return 45
       } else if (this.is('img, video') ) {
-        return 200
+        return 50
       } else if (this.is('div, section, article') ) {
-        return 120
+        return 35
       } else if (this.is('footer, header') ) {
-        return 150
+        return 40
       }
   };
 
@@ -296,7 +296,23 @@ var domGame = {
         self.addClass(whichWay);
       });
     }, 5000);
-    
+
+    // elem1 Hit = battlePower * Math.rand(1..3)
+    // elem2 Hit = battlePower * Math.rand(1..3)
+
+    // if elem1Hit > elem2hit
+    //   elem2Hit battleHealth - elem1Hit
+    //   if elem2battleHealth <= 0
+    //     elem2battleElement.remove()
+    //     elem2battleElement.getNext
+    //     if no next
+    //       elem2 LOSE
+    //     end
+    //   else
+    //     nextHit
+    //   end
+    // else
+    //   opposite of all above
     
   }
 };
