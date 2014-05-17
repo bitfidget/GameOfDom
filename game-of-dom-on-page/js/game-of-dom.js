@@ -202,8 +202,10 @@ var domGame = {
 
     var $TEOne = $('#TEOne');
     var $TETwo = $('#TETwo');
-    fighterOne.stage($TEOne);
-    fighterTwo.stage($TETwo);
+    fighters.setup('one', $TEOne);
+    fighters.setup('two', $TETwo);
+
+    debugger
 
     console.log('game staged');
 
@@ -211,10 +213,35 @@ var domGame = {
       popUp.messageCount(3);
     }, 5000);
 
-  }
+  },
 
-  
+  turn : function () {
+    
+  }
 };
+
+var fight = {}
+
+var fighters = {
+  setup : function (hash, fighter) {
+    var fWidth = fighter.outerWidth();
+    var fHeight = fighter.outerHeight();
+    if (hash = 'one') {
+      var fXRest = ( (winWidth/4) - (fWidth/2) );
+    } else {
+      var fXRest = ( ( (winWidth/4) * 3 ) - (fWidth/2) );
+    }
+    var fYRest = ( (winHeight/2) - (fHeight/2) );
+
+    fight[hash] = {
+      object : fighter,
+      restposition : {
+        'left' : fXRest + 'px',
+        'top' : fYRest + 'px'
+      }
+    }
+  }
+} 
 
 var fighterOne = {
   stage : function (fighter) {
@@ -315,10 +342,9 @@ var popUp = {
       console.log('counting down' + countFrom)
     } else {
       $counter.html('FIGHT');
+      domGame.turn(); 
+      console.log('fight started')
     };
-
-    domGame.turn(); 
-    
   }
 };
 
