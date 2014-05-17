@@ -182,11 +182,14 @@ var domGame = {
         $(event.target).addClass('domCloned');
         // stage game if this is second click
         if ($('#TETwo').length){
-          setTimeout(domGame.stage(), 1000)
+          setTimeout(function (){
+            domGame.stage()
+          }, 1000)
         };
       };
       
     });
+    
     console.log('game awaits clicks');
 
   },
@@ -194,7 +197,6 @@ var domGame = {
   stage : function () {
 
     currentMsg = 'fight';
-
     popCrowd.crowdShow();
     popUp.messageFetch(currentMsg);
 
@@ -204,7 +206,14 @@ var domGame = {
     fighterTwo.stage($TETwo);
 
     console.log('game staged');
+
+    setTimeout(function () {
+      popUp.messageCount(3);
+    }, 5000);
+
   }
+
+  
 };
 
 var fighterOne = {
@@ -242,6 +251,10 @@ var fighterTwo = {
 // all game messages added to $GDMessageContainer which is appended to body
 // createContainer - creates the div but it is display:none at start
 //------------------------------------------------------------------------//
+var $counter, 
+    $scoreOne,
+    $scoreTwo
+
 var popUp = {
   
   initialize : function () {
@@ -271,6 +284,41 @@ var popUp = {
     $GDMessageContainer.empty();
     $GDMessageContainer.append(fetchedMessage);
     $GDMessageContainer.slideDown(2000);
+  },
+
+  messageCount : function (countFrom) {
+
+    $GDMessageContainer.empty();
+    $GDMessageContainer.append('<h1 id="counter" />');
+    $GDMessageContainer.append('<h1 id="scoreOne" />');
+    $GDMessageContainer.append('<h1 id="scoreTwo" />');
+    $counter = $('#counter');
+    $scoreOne = $('#scoreOne');
+    $scoreTwo = $('#scoreTwo');
+    
+    console.log('ready for countdown')
+
+    this.messageCountDown(countFrom);
+
+  },
+
+  messageCountDown : function (countFrom) {
+
+    console.log(countFrom)
+    
+    if (countFrom > 0) {
+      $counter.html(countFrom);
+      countFrom -= 1;
+      setTimeout(function () {
+        popUp.messageCountDown(countFrom)
+      }, 1000);
+      console.log('counting down' + countFrom)
+    } else {
+      $counter.html('FIGHT');
+    };
+
+    domGame.turn(); 
+    
   }
 };
 
@@ -287,7 +335,7 @@ var popCrowd = {
   crowdShow : function () {
     $domCrowd.fadeIn(1000);
   }
-}
+};
 
 
 
