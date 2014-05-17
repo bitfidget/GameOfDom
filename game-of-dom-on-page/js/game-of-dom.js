@@ -202,10 +202,41 @@ var domGame = {
 
     var $TEOne = $('#TEOne');
     var $TETwo = $('#TETwo');
+
+    fighters[1] = $TEOne
+    fighters[2] = $TETwo
+
+    // time for confusion - add both elements to a hash so we can start iterating through on each 'turn'
+    $.each(fighters, function(i, value) {
+      var self = fighters[i]
+      // position at 1/4 and 3/4 width of the page
+      var whichSide;
+      if (i === '1') {
+        whichSide = (winWidth/4);
+      } else {
+        whichSide = ( (winWidth/4) * 3);
+      }
+      // set their rest positions
+      self.restposition = {
+        left : ( whichSide - (self.outerWidth()/2) ) + 'px',
+        top : ( (winWidth/4) - (self.outerWidth()/2) ) + 'px'
+      }
+      // get last child element for battle
+      self.battleElement = self.children
+
+    });
+
+debugger
+
     fighters.setup('one', $TEOne);
     fighters.setup('two', $TETwo);
 
-    debugger
+    $.each(fight, function(name, value) {
+      value.jObject.css(value.restposition)
+      value.jObject.addClass('tossing');
+    });
+    
+
 
     console.log('game staged');
 
@@ -220,28 +251,40 @@ var domGame = {
   }
 };
 
-var fight = {}
+// fight {
+//   $TEOne : {
+//     restposition : {
+//       left : left,
+//       top : top
+//     },
+//     battleElement : html,
+//     battlePower : 456,
+//     battleStrength : 100%,
+//   }
+// }
 
-var fighters = {
-  setup : function (hash, fighter) {
-    var fWidth = fighter.outerWidth();
-    var fHeight = fighter.outerHeight();
-    if (hash = 'one') {
-      var fXRest = ( (winWidth/4) - (fWidth/2) );
-    } else {
-      var fXRest = ( ( (winWidth/4) * 3 ) - (fWidth/2) );
-    }
-    var fYRest = ( (winHeight/2) - (fHeight/2) );
+var fighters = {}
 
-    fight[hash] = {
-      object : fighter,
-      restposition : {
-        'left' : fXRest + 'px',
-        'top' : fYRest + 'px'
-      }
-    }
-  }
-} 
+// var fighters = {
+//   setup : function (hash, fighter) {
+//     var fWidth = fighter.outerWidth();
+//     var fHeight = fighter.outerHeight();
+//     if (hash = 'one') {
+//       var fXRest = ( (winWidth/4) - (fWidth/2) );
+//     } else {
+//       var fXRest = ( ( (winWidth/4) * 3 ) - (fWidth/2) );
+//     }
+//     var fYRest = ( (winHeight/2) - (fHeight/2) );
+
+//     fight[hash] = {
+//       jObject : fighter,
+//       restposition : {
+//         'left' : fXRest + 'px',
+//         'top' : fYRest + 'px'
+//       }
+//     }
+//   }
+// } 
 
 var fighterOne = {
   stage : function (fighter) {
