@@ -108,6 +108,51 @@
     //now make the new element look like the original element
     $elem.append($clone); 
   };
+
+  $.fn.findBattleElement = function () {
+
+    var current = this
+    
+    var findLast = function () {
+      if ( current.children().length > 0 ) {
+        if ( current.children().last().is('br, p, span, td, ul, ol, li, tr, table, a, img, video, div, section, article, footer, header') ) {
+          current = current.children().last();
+          findLast();
+        } else {
+          current.children().last().remove();
+          findLast();
+        }
+      } else {
+        return current;
+      }
+    }
+
+    findLast()
+
+
+      //     if element has children
+      //   if last element is (type)
+      //     element = last element
+      //     restart
+      //   else
+      //     last element delete
+      //     restart
+      // else
+      //   element = element
+
+
+
+      // if (self.children().length > 0) {
+      //   var lastOfChildren = self.children().last();
+      //   if (lastOfChildren.children().length > 0) {
+      //     self.battleElement = lastOfChildren.children().last();
+      //   } else {
+      //     self.battleElement = lastOfChildren;
+      //   }
+      // } else {
+      //   self.battleElement = self;
+      // };
+  }
 } ( jQuery ) );
 
 //------------------------------------------------------------------------//
@@ -223,25 +268,7 @@ var domGame = {
       };
       // this will all move to a function of it's own
       // get last child element for battle
-
-      
-
-      if ( ( $objectOfHate.is("div,ul,ol,section,article") === true ) && ( $objectOfHate.children().length > 0 ) ) {
-      $objectOfHate = $objectOfHate.children().last();
-      getRevenge.killThemAll();
-    }
-
-
-      if (self.children().length > 0) {
-        var lastOfChildren = self.children().last();
-        if (lastOfChildren.children().length > 0) {
-          self.battleElement = lastOfChildren.children().last();
-        } else {
-          self.battleElement = lastOfChildren;
-        }
-      } else {
-        self.battleElement = self;
-      };
+      self.battleElement = self.findBattleElement()
       // calculate strenght of battleelement
       if (self.battleElement.is('br, p, span, td') ) {
         self.battlePower = 50
@@ -261,7 +288,6 @@ var domGame = {
   
 
     $.each(fighters, function(i, value) {
-      debugger
       value.jObject.css(value.restposition)
       value.jObject.addClass('tossing');
     });
