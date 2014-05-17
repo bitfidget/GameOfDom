@@ -127,6 +127,8 @@ var sanityTest = '<div id="sanityTest"/>';
 // 3. create the message box to use, fetch and append message HTML via ajax
 // 3. 
 //------------------------------------------------------------------------//
+
+
 var domGame = {
   initialize : function () {
     
@@ -136,15 +138,35 @@ var domGame = {
     winBody = $('body');
 
     winBody.append(sanityTest);
-    $('head').append('<link rel="stylesheet" type="text/css" href="' + projectHost + 'css/game-of-dom.css">'); 
+    $('head').append('<link rel="stylesheet" type="text/css" href="' + projectHost + 'css/game-of-dom.css">');
 
+    this.loadCheck();
+
+    console.log('game initialized')
+
+  },
+
+  loadCheck : function () {
+    // check if stylesheet loaded before running anything else
+    if ($('#sanityTest').is(':hidden')) {
+      console.log('stylesheet loaded')
+      domGame.welcome();
+      clearInterval(reload);
+    } else {
+      reload = setTimeout(function(){
+        console.log('stylesheet not loaded yet - retry');
+        domGame.loadCheck();
+      }, 500);
+    };
+  },
+
+  welcome : function () {
     currentMsg = 'welcome';
-    popUp.messageCreateContainer();
+    popUp.initialize();
     popUp.messageFetch(currentMsg);
     popCrowd.initialize();
-
     this.listen();
-
+    console.log('game welcome');
   },
 
   listen : function () {
@@ -154,19 +176,64 @@ var domGame = {
 
       // stop listeing if 2 elems already selected
       if (!$('#TETwo').length) {
+        
         console.log('clicked on ', event.target);
         $(event.target).dupliCanvas();
         $(event.target).addClass('domCloned');
+        // stage game if this is second click
+        if ($('#TETwo').length){
+          setTimeout(domGame.stage(), 1000)
+        };
       };
-      if ($('#TEOne').length){
-        setTimeout(domGame.stage(), 500)
-      };
+      
     });
+    console.log('game awaits clicks');
+
   },
 
   stage : function () {
-    popCrowd.initialize();
 
+    currentMsg = 'fight';
+
+    popCrowd.crowdShow();
+    popUp.messageFetch(currentMsg);
+
+    var $TEOne = $('#TEOne');
+    var $TETwo = $('#TETwo');
+    fighterOne.stage($TEOne);
+    fighterTwo.stage($TETwo);
+
+    console.log('game staged');
+  }
+};
+
+var fighterOne = {
+  stage : function (fighter) {
+    var fWidth = fighter.outerWidth();
+    var fHeight = fighter.outerHeight();
+    var fXRest = ( (winWidth/4) - (fWidth/2) );
+    var fYRest = ( (winHeight/2) - (fHeight/2) );
+
+    fighter.css({
+      'left' : fXRest + 'px',
+      'top' : fYRest + 'px'
+    });
+    fighter.addClass('tossing')
+  }
+};
+
+var fighterTwo = {
+  stage : function (fighter) { 
+    var fWidth = fighter.outerWidth();
+    var fHeight = fighter.outerHeight();
+    var fXRest = ( ( (winWidth/4) * 3 ) - (fWidth/2) );
+    var fYRest = ( (winHeight/2) - (fHeight/2) );
+
+    fighter.css({
+      'left' : fXRest + 'px',
+      'top' : fYRest + 'px'
+    });
+    fighter.addClass('tossing')
   }
 };
 
@@ -177,7 +244,7 @@ var domGame = {
 //------------------------------------------------------------------------//
 var popUp = {
   
-  messageCreateContainer : function () {
+  initialize : function () {
     winBody.append('<div id="GDMessageContainer" class="GoDText" />');
     $GDMessageContainer = $('#GDMessageContainer');
     $GDMessageContainer.css({'left': winAlertLeft + 'px'});
@@ -191,37 +258,19 @@ var popUp = {
       crossDomain: true,
       url: url,
       success : function (ajaxData){
-        popUp.messageShow(ajaxData.html);
+        popUp.messageShow(ajaxData.html)
       },
       error : function(){
         console.log('ajax popUp.messageFetch(' + currentMsg + ') error');
-        popUp.messageShow('error');
+        popUp.messageShow('ajax error');
       }
     });
   },
 
-  messageShow : function (currentMsg) {
-    
-    // check if $GDMessageContainer exists
-    // create $GDMessageContainer if not
-    // empty $GDMessageContainer if exists
-    if ($GDMessageContainer === 0){
-      this.messageCreateContainer();
-    } else {
-      $GDMessageContainer.empty();
-    };
-    
-    // check if stylesheet loaded before running fadeIn()
-    if ($('#sanityTest').is(':hidden')) {
-      $GDMessageContainer.fadeIn(1000);
-      clearInterval(reload);
-    } else {
-      reload = setTimeout(function(){
-        console.log('stylesheet not loaded yet - retry');
-        popUp.messageShow(currentMsg);
-      }, 500);
-    };
-    $GDMessageContainer.append(currentMsg);
+  messageShow : function (fetchedMessage) {  
+    $GDMessageContainer.empty();
+    $GDMessageContainer.append(fetchedMessage);
+    $GDMessageContainer.slideDown(2000);
   }
 };
 
@@ -229,10 +278,14 @@ var popCrowd = {
   initialize : function () {
     winBody.append('<div id="domCrowd" />');
     $domCrowd = $('#domCrowd');
-    $domCrowd.attr({
-      'width' : winWidth,
-      'height' : winHeight, 
-    })
+    $domCrowd.css({
+      'width' : winWidth + 'px',
+      'height' : winHeight + 'px',
+      'display' : 'none'
+    });
+  },
+  crowdShow : function () {
+    $domCrowd.fadeIn(1000);
   }
 }
 

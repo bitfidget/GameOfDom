@@ -1,9 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Marcellus+SC);
 
-body{
-  background: #E0E0E0;
-}
-
 /* generic style to hopefully not overlap with existing style */
 .GoDText,
 .GoDText h1,
@@ -26,6 +22,7 @@ body{
   -moz-box-shadow:  0 0 10px rgba(0,0,0,0.5);
   -webkit-box-shadow:  0 0 10px rgba(0,0,0,0.5);
   box-shadow:  0 0 10px rgba(0,0,0,0.5);
+  background: #FFF;
 }
 /* fade-out elems that have already been selceted */
 .domCloned{
@@ -54,9 +51,9 @@ img.domCloned{
 }
 #domCrowd{
   position: absolute;
-  display: none;
+  display: block;
   z-index: 1000000;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.5);
   top: 0;
   left: 0;
 }
@@ -78,3 +75,69 @@ img.domCloned{
 #GDMessageContainer button{
   display: none;
 }
+
+
+
+
+
+
+
+
+
+/*
+
+Following styles borrowed from: 
+
+==============================================
+CSS3 ANIMATION CHEAT SHEET
+==============================================
+
+Made by Justin Aguilar
+
+www.justinaguilar.com/animations/
+
+Questions, comments, concerns, love letters:
+justin@justinaguilar.com
+==============================================
+*/
+/*
+==============================================
+tossing
+==============================================
+*/
+
+.tossing{
+  animation-name: tossing;
+  -webkit-animation-name: tossing;  
+
+  animation-duration: 2.5s; 
+  -webkit-animation-duration: 2.5s;
+
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes tossing {
+  0% {
+    transform: rotate(-4deg); 
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  100% {
+    transform: rotate(-4deg); 
+  }           
+}
+
+@-webkit-keyframes tossing {
+  0% {
+    -webkit-transform: rotate(-4deg); 
+  }
+  50% {
+    -webkit-transform: rotate(4deg);
+  }
+  100% {
+    -webkit-transform: rotate(-4deg); 
+  }       
+}
+

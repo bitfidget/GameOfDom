@@ -1,0 +1,4 @@
+{
+"class":"fight",
+"html":"<h1>WHO WILL WIN<\/h1><p>Butterfly VS Hotdogs<\/p>"
+}
