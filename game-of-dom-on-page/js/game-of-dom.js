@@ -400,17 +400,7 @@ var fighters = {}
 // all game messages added to $GDMessageContainer which is appended to body
 // createContainer - creates the div but it is display:none at start
 //------------------------------------------------------------------------//
-var $counter, 
-    $scoreOne,
-    $scoreTwo,
-    $powerOne,
-    $powerTwo,
-    $healthOne,
-    $healthTwo,
-    $hitOne,
-    $hitTwo,
-    $nameOne,
-    $nameTwo
+var $counter, $scoreOne, $scoreTwo, $powerOne, $powerTwo, $healthOne, $healthTwo, $hitOne, $hitTwo, $nameOne, $nameTwo
 
 
 var popUp = {
@@ -499,9 +489,9 @@ var popUp = {
     $scoreTwo.html(fighters[2].battleScore)
     $hitOne.html(fighters[1].thisHit)
     $hitTwo.html(fighters[2].thisHit)
-    $healthOne.html(fighters[2].battleHealth)
+    $healthOne.html(fighters[1].battleHealth)
     $healthTwo.html(fighters[2].battleHealth)
-    $powerOne.html(fighters[2].battlePower)
+    $powerOne.html(fighters[1].battlePower)
     $powerTwo.html(fighters[2].battlePower)
   }
 };

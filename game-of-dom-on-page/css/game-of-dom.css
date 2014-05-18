@@ -58,16 +58,20 @@ img.domCloned{
   left: 0;
 }
 .crowdBase{
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.2) url(http://modelcitizen.com.au/game-of-dom/img/crowd-01.png) bottom no-repeat;
+  background-size: 100%;
 }
 .crowdBaseTwo{
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.2) url(http://modelcitizen.com.au/game-of-dom/img/crowd-02.png) bottom no-repeat;
+  background-size: 100%;
 }
 .crowdCheer{
-  background: rgba(255,0,0,0.2);
+  background: rgba(255,0,0,0.4) url(http://modelcitizen.com.au/game-of-dom/img/crowd-cheer-01.png) bottom no-repeat;
+  background-size: 100%;
 }
 .crowdCheerTwo{
-  background: rgba(255,0,0,0.8);
+  background: rgba(255,255,255,0.6) url(http://modelcitizen.com.au/game-of-dom/img/crowd-cheer-02.png) bottom no-repeat;
+  background-size: 100%;
 }
 
 /* the popup boxes */
