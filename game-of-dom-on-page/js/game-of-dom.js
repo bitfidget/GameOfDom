@@ -260,9 +260,11 @@ var domGame = {
         whichSide = ( (winWidth/4) * 3);
       };
       // set their rest positions
+      self.offSetX = (self.outerWidth()/2)
+      self.offSetY = (self.outerWidth()/2)
       self.restPosition = {
-        left : ( whichSide - (self.outerWidth()/2) ) + 'px',
-        top : ( (winWidth/4) - (self.outerWidth()/2) ) + 'px'
+        left : ( whichSide - self.offSetX ) + 'px',
+        top : ( (winWidth/4) - self.offSetY ) + 'px'
       };
       // get last child element for battle
       //self.battleElement = self.findBattleElement();
@@ -271,6 +273,8 @@ var domGame = {
       self.battlePower = self.battleElement.setPower();
       // self battleHealth
       self.battleHealth = 100;
+      // reset the scores
+      self.battleScore = '';
       // move to positions
       self.css(self.restPosition);
       self.addClass('tossing');
@@ -279,25 +283,62 @@ var domGame = {
     console.log('game staged');
 
     setTimeout(function () {
-      popUp.messageCount(3);
+      popUp.messageCount(0);
     }, 5000);
 
   },
 
   turn : function () {
 
+    // make fighters advance on each other every 2 sec
     setTimeout(function () {
       $.each(fighters, function(i, value) {
         var self = fighters[i];
-        var whichWay;
-        if (i === '1') {
-          whichWay = 'slideRight';
-        } else {
-          whichWay = 'slideLeft';
-        };
-        self.addClass(whichWay);
+        // var whichWay;
+        // if (i === '1') {
+        //   whichWay = 'slideRight';
+        // } else {
+        //   whichWay = 'slideLeft';
+        // };
+        self.css(self.restPosition);
+        $('.hatch').removeClass('hatch');
       });
-    }, 5000);
+      // the actual move
+      var winner, loser;
+      setTimeout(function () {
+        $.each(fighters, function(i, value) {
+          var self = fighters[i];
+          // movement functions
+          self.css({ 'left' : ( (winWidth/2) - self.offSetX) + 'px' });
+          self.addClass('hatch');
+          // scoring functions
+          self.thisHit = this.battlePower * Math.floor( (Math.random() * 5) + 1 );
+        });
+        // win/lose logix
+        if (fighters[1].thisHit > fighters[2].thisHit){
+          winner = fighters[1];
+          loser = fighters[2]
+        } else {
+          winner = fighters[2];
+          loser = fighters[1]
+        }
+        debugger
+        // adjust fighters
+        winner.battleScore += loser.thisHit;
+        loser.battleHealth -= winner.thisHit;
+        if (loser.battleHealth <= 0) {
+          loser.battleElement.remove();
+          winner.battleScore += 100;
+          loser.battleScore -= loser.battlePower;
+          // get next battle element
+          // if no next element, DIE
+        };
+
+
+
+        domGame.turn();
+      }, 1100);
+    }, 2000);
 
     // elem1 Hit = battlePower * Math.rand(1..3)
     // elem2 Hit = battlePower * Math.rand(1..3)
