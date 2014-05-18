@@ -330,7 +330,8 @@ var domGame = {
           domGame.end(winner, loser);
           return
         };
-        domGame.flyOff(loser.battleElement);
+        var deadBits = loser.battleElement.clone()
+        domGame.flyOff(deadBits);
         loser.battleElement.remove();
         loser.battleElement = loser.findBattleElement();
         loser.battlePower = loser.battleElement.setPower();
@@ -358,6 +359,7 @@ var domGame = {
 
   flyOff : function (deadBits) {
     winBody.append(deadBits)
+    console.log(deadBits)
   },
 
   restage : function () {
@@ -374,7 +376,7 @@ var domGame = {
     $('.tossing').removeClass('tossing');
     setInterval(function () {
       winner.toggleClass('bounce');
-    }, 600);
+    }, 1000);
   }
 };
 
