@@ -1,12 +1,9 @@
-/*
- * getStyleObject Plugin for jQuery JavaScript Library
- * From: http://upshots.org/?p=112
- *
- * Copyright: Unknown, see source link
- * Plugin version by Dakota Schneider (http://hackthetruth.org)
- */
 
 (function($){
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
+  // I borrowed the first function here, but the rest of this code belongs to Kriss Heimanis. Not that anyone esle would want to claim it!
+  // getStyleObject Plugin for jQuery JavaScript Library - From: http://upshots.org/?p=112 - Copyright: Unknown, see source link - Plugin version by Dakota Schneider (http://hackthetruth.org)
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
   $.fn.getStyleObject = function(){
     var dom = this.get(0);
     var style, prop;
@@ -33,6 +30,9 @@
     }
     return this.css();
   };
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
+  // I borrowed the first function here, http://stackoverflow.com/a/21278583/3646707
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
   $.fn.cloneWithCSS = function() {
     styles = {};
 
@@ -62,19 +62,13 @@
 
     return $clone;
   };
-
-//------------------------------------------------------------------------//
-// create a canvas element that duplocates the element selected
-//------------------------------------------------------------------------//
- 
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
+  // use the clone.css function above on my selected items, also duplicating them in place of the original item
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
   $.fn.dupliCanvas = function () {
 
     var $clone = this.cloneWithCSS();
-    $clone.css({
-      'position' : 'absolute', 
-      'left': 0, 
-      'top' : 0
-    });
+    var traceElement, $elem;
 
     // get selected element x,y pos and width,height
     var winScrollLeft = $(window).scrollLeft();   
@@ -85,8 +79,6 @@
     var canvasY = this.offset().top - winScrollTop;
 
     // create duplicate element - named diffently
-    var traceElement, $elem;
-
     if (!$('.divFighter').length) {
       traceElement = '<div id="TEOne" class="divFighter" />';
       winBody.append(traceElement);
@@ -106,11 +98,18 @@
     });
 
     //now make the new element look like the original element
+    $clone.css({
+      'position' : 'absolute', 
+      'left': 0, 
+      'top' : 0
+    });
     $elem.append($clone); 
   };
 
   $.fn.findBattleElement = function () {
-
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
+  // this just loops through an element and finds it's deepest/lowest subchild - I spent a day on this cos I forgot to add 'return current' and couldnt work it out.
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
     var current = this
     console.log('start with: '  + current)
 
@@ -131,11 +130,11 @@
       }
       return current
     }
-
     return findLast()
-
   };
-
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
+  // just assigns a power value according to the element selected
+  //--------------------------------------------------------------------------------------------------------------------------------------------------//
   $.fn.setPower = function () {
     if (this.is('br, p, span, td') ) {
         return 20
@@ -163,35 +162,33 @@ var winWidth, winHeight, winAlertLeft, winBody, currentMsg, reload;
 var $GDMessageContainer = 0;
 var sanityTest = '<div id="sanityTest"/>';
 
-//------------------------------------------------------------------------//
-// main flow of the script all comes from domGame
-// INITIALIZE
-// 1. get/set DOM dependent variables  
-// 2. add stylesheet
-// 3. create the message box to use, fetch and append message HTML via ajax
-// 3. 
-//------------------------------------------------------------------------//
-
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
+// domGame runs the whole thing - most call's to other functions all run from here, most logic is in here too.
+// initialize: sets all game variables
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
 
 var domGame = {
   initialize : function () {
-    
+    //-----------------------------------------------------
+    // load all game variables and the style sheet
+    //-----------------------------------------------------
     winWidth = $(window).width();
     winHeight = $(window).height();
     winAlertLeft = ((winWidth - 300) / 2);
     winBody = $('body');
-
     winBody.append(sanityTest);
     $('head').append('<link rel="stylesheet" type="text/css" href="' + projectHost + 'css/game-of-dom.css">');
-
     this.loadCheck();
-
+    //------------------------------------------------------
+    // game ready to roll --> next step is domGame.loadCheck
+    //-----------------------------------------------------
     console.log('game initialized')
-
   },
 
   loadCheck : function () {
-    // check if stylesheet loaded before running anything else
+    //-----------------------------------------------------
+    // check the stylesheet is loaded via state of #sanitytest
+    //-----------------------------------------------------
     if ($('#sanityTest').is(':hidden')) {
       console.log('stylesheet loaded')
       domGame.welcome();
@@ -202,25 +199,37 @@ var domGame = {
         domGame.loadCheck();
       }, 500);
     };
+    //-----------------------------------------------------
+    // when check returns true --> domGame.welcome
+    //-----------------------------------------------------
   },
 
   welcome : function () {
+    //-----------------------------------------------------
+    // initialize all the game pieces 
+    //-----------------------------------------------------
     currentMsg = 'welcome';
     popUp.initialize();
     popUp.messageFetch(currentMsg);
     popCrowd.initialize();
     this.listen();
+    //-----------------------------------------------------
+    // setup the popUp window --> popUp.initialize
+    // get the welcome message --> popUp.messageFetch
+    // setup the crowd window --> popCrowd.inititalize
+    // setup the click listeners --> domGame.listen
+    //-----------------------------------------------------
     console.log('game welcome');
   },
 
   listen : function () {
-    // register a click on any elem
+    //-----------------------------------------------------
+    // listen for clicks on any window element
+    //-----------------------------------------------------
     $(document).click( function (event) {
       event.preventDefault();
-
-      // stop listeing if 2 elems already selected
+      // stop listening if 2 elems already selected
       if (!$('#TETwo').length) {
-        
         console.log('clicked on ', event.target);
         $(event.target).dupliCanvas();
         $(event.target).addClass('domCloned');
@@ -228,28 +237,33 @@ var domGame = {
         if ($('#TETwo').length){
           setTimeout(function (){
             domGame.stage()
-          }, 1000)
+          }, 500)
         };
       };
-      
     });
-    
+    //-----------------------------------------------------
+    // once two elements have been selected and duplicated --> domGame.stage
+    //-----------------------------------------------------
     console.log('game awaits clicks');
-
   },
 
   stage : function () {
-
+    //-----------------------------------------------------
+    // ohhhkay... stage the fight
+    // get the crowd started --> popCrowd.crowdShow
+    // get the scoreboard --> popUp.messageFetch(fight)
+    // get the two selected divs and add them to the hash
+    // set up all their extra variables
+    //-----------------------------------------------------
     currentMsg = 'fight';
     popCrowd.crowdShow();
     popUp.messageFetch(currentMsg);
-
+    // get the actual objects
     var $TEOne = $('#TEOne');
     var $TETwo = $('#TETwo');
-
+    // add them to the hash
     fighters[1] = $TEOne
     fighters[2] = $TETwo
-
     // time for confusion - add both elements to a hash so we can start iterating through on each 'turn'
     $.each(fighters, function(i, value) {
       var self = fighters[i]
@@ -282,13 +296,7 @@ var domGame = {
       self.css(self.restPosition);
       self.addClass('tossing');
     });
-
     // append the names to the score board
-
-    
-    
-    console.log('game staged');
-
     setTimeout(function () {
       popUp.messageCount(3);
       $nameOne = $('#nameOne');
@@ -296,13 +304,22 @@ var domGame = {
       $nameOne.html(fighters[1].gameName);
       $nameTwo.html(fighters[2].gameName);
     }, 2000);
-
+    //-----------------------------------------------------
+    // add the names to the scoreboard
+    // finally, kick off the countdown --> popUp.messageCount
+    //-----------------------------------------------------
+    console.log('game staged');
   },
 
   turn : function () {
-
+    //-----------------------------------------------------
+    // make both fighters advance on each other (advance)
+    // decide the winner and set all attribs accordingly (assess)
+    // update the score each time --> popUp.updateScore()
+    // go back to start positions --> domGame.restage()
+    // redo until someone does --> domGame.turn();
+    //-----------------------------------------------------
     var winner, loser;
-
     // make fighters advance on each other every .5 sec
     var advance = function () {
       $('.hatch').removeClass('hatch');
@@ -313,7 +330,6 @@ var domGame = {
       }, 600);
       domGame.restage();
     };
-
     // assess the winner and loser
     var assess = function () {
       $.each(fighters, function(i, value) {
@@ -356,33 +372,39 @@ var domGame = {
       popUp.updateScore()
       domGame.turn();
     }
-
+    // do it again
     setTimeout(function () {
       advance()
     }, 500);
-
-    // add crowd styles
-
-    // add scores/life bar underneath
-
-    // addsounds
-    
+    //-----------------------------------------------------
+    // all bits that killed off --> domGame.flyOff
+    // once you have a winner --> domGame.end(winner, loser)
+    //-----------------------------------------------------
   },
 
   flyOff : function (deadBits) {
+    //-----------------------------------------------------
+    // make the dead bits fly away 
+    //-----------------------------------------------------
     winBody.append(deadBits)
     console.log(deadBits)
   },
 
   restage : function () {
+    //-----------------------------------------------------
+    // just moves the fighters back to their corners
+    //-----------------------------------------------------
     $.each(fighters, function(i, value) {
       var self = fighters[i];
       self.css(self.restPosition);
     });
-    console.log('restaged')
   },
 
   end : function (winner, loser) {
+    //-----------------------------------------------------
+    // game OVER! make the dead dude look dead
+    // make the winner look happy!
+    //-----------------------------------------------------
     loser.battleElement.append('<h1>DEAD</h1>');
     $('.hatch').removeClass('hatch');
     $('.tossing').removeClass('tossing');
@@ -394,24 +416,28 @@ var domGame = {
 };
 
 
-var fighters = {}
-
-//------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
 // all game messages added to $GDMessageContainer which is appended to body
 // createContainer - creates the div but it is display:none at start
-//------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
 var $counter, $scoreOne, $scoreTwo, $powerOne, $powerTwo, $healthOne, $healthTwo, $hitOne, $hitTwo, $nameOne, $nameTwo
-
+var fighters = {};
 
 var popUp = {
   
   initialize : function () {
+    //-----------------------------------------------------
+    // build the message container on window
+    //-----------------------------------------------------
     winBody.append('<div id="GDMessageContainer" class="GoDText" />');
     $GDMessageContainer = $('#GDMessageContainer');
     $GDMessageContainer.css({'left': winAlertLeft + 'px'});
   },
   
   messageFetch : function (currentMsg) {
+    //-----------------------------------------------------
+    // fetch json message to display in the popup
+    //-----------------------------------------------------
     var url = (projectHost + messagePath + currentMsg + '/json.txt');
     $.ajax({
       type: 'GET',
@@ -427,26 +453,25 @@ var popUp = {
         popUp.messageShow('ajax error');
       }
     });
+    //-----------------------------------------------------
+    // once message fetched --> popUp.messageShow
+    //-----------------------------------------------------
   },
 
-  messageShow : function (fetchedMessage) {  
+  messageShow : function (fetchedMessage) {
+    //-----------------------------------------------------
+    // empty the message window and show the new message
+    //-----------------------------------------------------
     $GDMessageContainer.empty();
     $GDMessageContainer.append(fetchedMessage);
     $GDMessageContainer.slideDown(2000);
   },
 
   messageCount : function (countFrom) {
-
-    // $GDMessageContainer.empty();
-    // $GDMessageContainer.append('<h1 id="counter" />');
-    // $GDMessageContainer.append('<h1 id="scoreOne">0</div>');
-    // $GDMessageContainer.append('<h1 id="scoreTwo">0</div>');
-    // $GDMessageContainer.append('<h2 id="hitOne">0</div>');
-    // $GDMessageContainer.append('<h2 id="hitTwo">0</div>');
-    // $GDMessageContainer.append('<h2 id="healthOne">0</div>');
-    // $GDMessageContainer.append('<h2 id="healthTwo">0</div>');
-    // $GDMessageContainer.append('<h2 id="powerOne">0</div>');
-    // $GDMessageContainer.append('<h2 id="powerTwo">0</div>');
+    //-----------------------------------------------------
+    // --> pass down the counter value
+    // setup all the dom objects for info on scoreboard
+    //-----------------------------------------------------
     $counter = $('#fight');
     $scoreOne = $('#scoreOne');
     $scoreTwo = $('#scoreTwo');
@@ -457,19 +482,18 @@ var popUp = {
     $powerOne = $('#powerOne');
     $powerTwo = $('#powerTwo');
 
-    
-    console.log('ready for countdown')
-
     this.messageCountDown(countFrom);
-
+    //-----------------------------------------------------
+    // start the countdown message --> popUp.messageCountDown
+    //-----------------------------------------------------
+    console.log('ready for countdown')
   },
 
   messageCountDown : function (countFrom) {
-
-    console.log(countFrom)
-
-    popCrowd.crowdBase();
-    
+    //-----------------------------------------------------
+    // countdown to start the fight
+    // get the crowd cheering! --> popCrowd.crowdBase
+    //-----------------------------------------------------    
     if (countFrom > 0) {
       $counter.html(countFrom);
       countFrom -= 1;
@@ -481,10 +505,14 @@ var popUp = {
       $counter.html('FIGHT!');
       domGame.turn(); 
       console.log('fight started')
+      popCrowd.crowdBase();
     };
   },
 
   updateScore : function () {
+    //-----------------------------------------------------
+    // update the score... just like it says on the tin 
+    //-----------------------------------------------------
     $scoreOne.html(fighters[1].battleScore)
     $scoreTwo.html(fighters[2].battleScore)
     $hitOne.html(fighters[1].thisHit)
@@ -496,8 +524,16 @@ var popUp = {
   }
 };
 
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
+// the animated crowd figures
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
 var popCrowd = {
+
   initialize : function () {
+    //-----------------------------------------------------
+    // just like the popup window, start by creating elem
+    //-----------------------------------------------------
     winBody.append('<div id="domCrowd" />');
     $domCrowd = $('#domCrowd');
     $domCrowd.css({
@@ -507,34 +543,41 @@ var popCrowd = {
     });
   },
   crowdShow : function () {
+    //-----------------------------------------------------
+    // bring it into view
+    //-----------------------------------------------------
     $domCrowd.fadeIn(1000);
   },
   crowdBase : function () {
+    //-----------------------------------------------------
+    // show the crowd having a good time
+    //-----------------------------------------------------
     $domCrowd.addClass('crowdBase')
     setInterval(function () {
       $domCrowd.toggleClass('crowdBaseTwo')
     }, 500)
   },
   crowdCheer : function (time) {
+    //-----------------------------------------------------
+    // crowd GO NUTS
+    //-----------------------------------------------------
     console.log('cheer')
     $domCrowd.addClass('crowdCheer')
-    
-    agitation = window.setInterval(function () {
+    agitation = setInterval(function () {
       $domCrowd.toggleClass('crowdCheerTwo')
     }, 400);
     setTimeout(function () {
-      console.log(time)
-      window.clearInterval(agitation)
-      $domCrowd.removeClass('crowdCheer')
-      $domCrowd.removeClass('crowdCheerTwo')
-    }, time)
+      console.log(time);
+      clearInterval(agitation);
+      $domCrowd.removeClass('crowdCheer');
+      $domCrowd.removeClass('crowdCheerTwo');
+    }, parseInt(time) );
   }
 };
 
 
-
 //------------------------------------------------------------------------//
-// start the party
+// Start the party. 
 //------------------------------------------------------------------------//
 $(document).ready(function(){
   domGame.initialize();
