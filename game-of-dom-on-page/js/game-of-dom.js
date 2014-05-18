@@ -129,6 +129,7 @@
         console.log('end of function, return - ' + current)
         return current
       }
+      return current
     }
 
     return findLast()
@@ -267,8 +268,7 @@ var domGame = {
         top : ( (winWidth/4) - self.offSetY ) + 'px'
       };
       // get last child element for battle
-      //self.battleElement = self.findBattleElement();
-      self.battleElement = self
+      self.battleElement = self.findBattleElement();
       // calculate strenght of battleelement
       self.battlePower = self.battleElement.setPower();
       // self battleHealth
@@ -326,10 +326,13 @@ var domGame = {
         winner.battleScore += loser.thisHit;
         loser.battleHealth -= winner.thisHit;
         if (loser.battleHealth <= 0) {
-          debugger
           loser.battleElement.remove();
+          loser.battleElement = loser.findBattleElement();
+          loser.battlePower = loser.battleElement.setPower();
+          loser.battleHealth = 100;
           winner.battleScore += 100;
           loser.battleScore -= loser.battlePower;
+          debugger
           // get next battle element
           // if no next element, DIE
         };
