@@ -69,7 +69,7 @@
  
   $.fn.dupliCanvas = function () {
 
-    $clone = this.cloneWithCSS();
+    var $clone = this.cloneWithCSS();
     $clone.css({
       'position' : 'absolute', 
       'left': 0, 
@@ -112,22 +112,26 @@
   $.fn.findBattleElement = function () {
 
     var current = this
+    console.log('start with: '  + current)
 
     var findLast = function () {
       if ( current.children().length > 0 ) {
         if ( current.children().last().is('br, p, span, td, ul, ol, li, tr, table, a, img, video, div, section, article, footer, header') ) {
           current = current.children().last();
+          console.log('if of type x, check again: '  + current)
           findLast();
         } else {
           current.children().last().remove();
+          console.log('not of type, get next of: ' + current)
           findLast();
         }
       } else {
+        console.log('end of function, return - ' + current)
         return current
       }
     }
 
-    findLast()
+    return findLast()
 
   };
 
@@ -146,7 +150,6 @@
         return 40
       }
   };
-
 
 } ( jQuery ) );
 
@@ -292,7 +295,6 @@ var domGame = {
         } else {
           whichWay = 'slideLeft';
         };
-        debugger
         self.addClass(whichWay);
       });
     }, 5000);
@@ -301,18 +303,27 @@ var domGame = {
     // elem2 Hit = battlePower * Math.rand(1..3)
 
     // if elem1Hit > elem2hit
+    //    elem1 score += elem1Hit power
     //   elem2Hit battleHealth - elem1Hit
     //   if elem2battleHealth <= 0
     //     elem2battleElement.remove()
     //     elem2battleElement.getNext
+    //     elem1 score += 200
     //     if no next
     //       elem2 LOSE
+    //        elem1 score += 500
     //     end
     //   else
     //     nextHit
     //   end
     // else
     //   opposite of all above
+
+    // add crowd styles
+
+    // add scores/life bar underneath
+
+    // addsounds
     
   }
 };
