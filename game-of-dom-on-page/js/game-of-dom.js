@@ -163,7 +163,7 @@ var $GDMessageContainer = 0;
 var sanityTest = '<div id="sanityTest"/>';
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
-// domGame runs the whole thing - most call's to other functions all run from here, most logic is in here too.
+// domGame runs the whole thing - most calls to other functions all run from here, most logic is in here too.
 // initialize: sets all game variables
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -356,6 +356,7 @@ var domGame = {
           // fight over
           domGame.restage()
           domGame.end(winner, loser);
+          domGame.save(winner, loser);
           return
         };
         var deadBits = loser.battleElement.clone()
@@ -412,7 +413,15 @@ var domGame = {
       winner.toggleClass('bounce');
       winner.empty().append(winner.shadow);
     }, 1000);
+  },
+
+  save : function (winner, loser) {
+    //-----------------------------------------------------
+    // send winner
+    // make the winner look happy!
+    //-----------------------------------------------------
   }
+
 };
 
 
