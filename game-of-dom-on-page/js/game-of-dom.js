@@ -312,7 +312,7 @@ var domGame = {
           self.css({ 'left' : ( (winWidth/2) - self.offSetX) + 'px' });
           self.addClass('hatch');
           // scoring functions
-          self.thisHit = this.battlePower * Math.floor( (Math.random() * 5) + 1 );
+          self.thisHit = this.battlePower * Math.floor( (Math.random() * 3) + 1 );
         });
         // win/lose logix
         if (fighters[1].thisHit > fighters[2].thisHit){
@@ -322,11 +322,11 @@ var domGame = {
           winner = fighters[2];
           loser = fighters[1]
         }
-        debugger
         // adjust fighters
         winner.battleScore += loser.thisHit;
         loser.battleHealth -= winner.thisHit;
         if (loser.battleHealth <= 0) {
+          debugger
           loser.battleElement.remove();
           winner.battleScore += 100;
           loser.battleScore -= loser.battlePower;
