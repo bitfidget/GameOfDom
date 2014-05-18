@@ -274,7 +274,7 @@ var domGame = {
       // self battleHealth
       self.battleHealth = 100;
       // reset the scores
-      self.battleScore = '';
+      self.battleScore = 0;
       // move to positions
       self.css(self.restPosition);
       self.addClass('tossing');
@@ -290,19 +290,10 @@ var domGame = {
 
   turn : function () {
 
-    // make fighters advance on each other every 2 sec
+    // make fighters advance on each other every .5 sec
     setTimeout(function () {
-      $.each(fighters, function(i, value) {
-        var self = fighters[i];
-        // var whichWay;
-        // if (i === '1') {
-        //   whichWay = 'slideRight';
-        // } else {
-        //   whichWay = 'slideLeft';
-        // };
-        self.css(self.restPosition);
-        $('.hatch').removeClass('hatch');
-      });
+      
+      $('.hatch').removeClass('hatch');
       // the actual move
       var winner, loser;
       setTimeout(function () {
@@ -326,42 +317,36 @@ var domGame = {
         winner.battleScore += loser.thisHit;
         loser.battleHealth -= winner.thisHit;
         if (loser.battleHealth <= 0) {
+          if (loser.battleElement.get(0).class = 'divFighter' ) {
+            // fight over
+            debugger
+            domGame.restage()
+            domGame.end(winner, loser);
+            return
+          };
+          domGame.flyOff(loser.battleElement);
           loser.battleElement.remove();
           loser.battleElement = loser.findBattleElement();
           loser.battlePower = loser.battleElement.setPower();
           loser.battleHealth = 100;
           winner.battleScore += 100;
           loser.battleScore -= loser.battlePower;
-          debugger
-          // get next battle element
           // if no next element, DIE
         };
-
-
-
+        // update scores and info
+        popUp.updateScore()
+        // $scoreOne.html(fighters[1].battleScore)
+        // $scoreTwo.html(fighters[2].battleScore)
+        // $hitOne.html(fighters[1].thisHit)
+        // $hitTwo.html(fighters[2].thisHit)
+        // $healthOne.html(fighters[2].battleHealth)
+        // $healthTwo.html(fighters[2].battleHealth)
+        // $powerOne.html(fighters[2].battlePower)
+        // $powerTwo.html(fighters[2].battlePower)
         domGame.turn();
-      }, 1100);
-    }, 2000);
-
-    // elem1 Hit = battlePower * Math.rand(1..3)
-    // elem2 Hit = battlePower * Math.rand(1..3)
-
-    // if elem1Hit > elem2hit
-    //    elem1 score += elem1Hit power
-    //   elem2Hit battleHealth - elem1Hit
-    //   if elem2battleHealth <= 0
-    //     elem2battleElement.remove()
-    //     elem2battleElement.getNext
-    //     elem1 score += 200
-    //     if no next
-    //       elem2 LOSE
-    //        elem1 score += 500
-    //     end
-    //   else
-    //     nextHit
-    //   end
-    // else
-    //   opposite of all above
+      }, 600);
+      domGame.restage();
+    }, 500);
 
     // add crowd styles
 
@@ -369,8 +354,30 @@ var domGame = {
 
     // addsounds
     
+  },
+
+  flyOff : function (deadBits) {
+    winBody.append(deadBits)
+  }
+
+  restage : function () {
+    $.each(fighters, function(i, value) {
+      var self = fighters[i];
+      self.css(self.restPosition);
+    });
+    console.log('restaged')
+  },
+
+  end : function (winner, loser) {
+    loser.battleElement.append('<h1>DEAD</h1>');
+    $('.hatch').removeClass('hatch');
+    $('.tossing').removeClass('tossing');
+    setInterval(function () {
+      winner.toggleClass('bounce');
+    }, 600);
   }
 };
+
 
 var fighters = {}
 
@@ -380,7 +387,14 @@ var fighters = {}
 //------------------------------------------------------------------------//
 var $counter, 
     $scoreOne,
-    $scoreTwo
+    $scoreTwo,
+    $powerOne,
+    $powerTwo,
+    $healthOne,
+    $healthTwo,
+    $hitOne,
+    $hitTwo;
+
 
 var popUp = {
   
@@ -417,11 +431,23 @@ var popUp = {
 
     $GDMessageContainer.empty();
     $GDMessageContainer.append('<h1 id="counter" />');
-    $GDMessageContainer.append('<h1 id="scoreOne" />');
-    $GDMessageContainer.append('<h1 id="scoreTwo" />');
+    $GDMessageContainer.append('<h1 id="scoreOne">0</div>');
+    $GDMessageContainer.append('<h1 id="scoreTwo">0</div>');
+    $GDMessageContainer.append('<h2 id="hitOne">0</div>');
+    $GDMessageContainer.append('<h2 id="hitTwo">0</div>');
+    $GDMessageContainer.append('<h2 id="healthOne">0</div>');
+    $GDMessageContainer.append('<h2 id="healthTwo">0</div>');
+    $GDMessageContainer.append('<h2 id="powerOne">0</div>');
+    $GDMessageContainer.append('<h2 id="powerTwo">0</div>');
     $counter = $('#counter');
     $scoreOne = $('#scoreOne');
     $scoreTwo = $('#scoreTwo');
+    $hitOne = $('#hitOne');
+    $hitTwo = $('#hitTwo');
+    $healthOne = $('#healthOne');
+    $healthTwo = $('#healthTwo');
+    $powerOne = $('#powerOne');
+    $powerTwo = $('#powerTwo');
     
     console.log('ready for countdown')
 
@@ -445,6 +471,17 @@ var popUp = {
       domGame.turn(); 
       console.log('fight started')
     };
+  },
+
+  updateScore : function () {
+    $scoreOne.html(fighters[1].battleScore)
+    $scoreTwo.html(fighters[2].battleScore)
+    $hitOne.html(fighters[1].thisHit)
+    $hitTwo.html(fighters[2].thisHit)
+    $healthOne.html(fighters[2].battleHealth)
+    $healthTwo.html(fighters[2].battleHealth)
+    $powerOne.html(fighters[2].battlePower)
+    $powerTwo.html(fighters[2].battlePower)
   }
 };
 
