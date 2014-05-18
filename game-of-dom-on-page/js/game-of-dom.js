@@ -253,6 +253,7 @@ var domGame = {
     // time for confusion - add both elements to a hash so we can start iterating through on each 'turn'
     $.each(fighters, function(i, value) {
       var self = fighters[i]
+      self.shadow = self.children().first().clone()
       // position at 1/4 and 3/4 width of the page
       var whichSide;
       if (i === '1') {
@@ -269,6 +270,8 @@ var domGame = {
       };
       // get last child element for battle
       self.battleElement = self.findBattleElement();
+      // get the name of the element
+      self.gameName = self.children().first().get(0).tagName
       // calculate strenght of battleelement
       self.battlePower = self.battleElement.setPower();
       // self battleHealth
@@ -279,12 +282,20 @@ var domGame = {
       self.css(self.restPosition);
       self.addClass('tossing');
     });
+
+    // append the names to the score board
+
+    
     
     console.log('game staged');
 
     setTimeout(function () {
-      popUp.messageCount(0);
-    }, 5000);
+      popUp.messageCount(3);
+      $nameOne = $('#nameOne');
+      $nameTwo = $('#nameTwo');
+      $nameOne.html(fighters[1].gameName);
+      $nameTwo.html(fighters[2].gameName);
+    }, 2000);
 
   },
 
@@ -295,6 +306,7 @@ var domGame = {
     // make fighters advance on each other every .5 sec
     var advance = function () {
       $('.hatch').removeClass('hatch');
+      popCrowd.crowdCheer(600)
       // the actual move
       setTimeout(function () {
         assess()
@@ -376,6 +388,7 @@ var domGame = {
     $('.tossing').removeClass('tossing');
     setInterval(function () {
       winner.toggleClass('bounce');
+      winner.empty().append(winner.shadow);
     }, 1000);
   }
 };
@@ -395,7 +408,9 @@ var $counter,
     $healthOne,
     $healthTwo,
     $hitOne,
-    $hitTwo;
+    $hitTwo,
+    $nameOne,
+    $nameTwo
 
 
 var popUp = {
@@ -414,7 +429,8 @@ var popUp = {
       crossDomain: true,
       url: url,
       success : function (ajaxData){
-        popUp.messageShow(ajaxData.html)
+        popUp.messageShow(ajaxData.html);
+        console.log('ajax fetch messge SUCCESS ' + currentMsg);
       },
       error : function(){
         console.log('ajax popUp.messageFetch(' + currentMsg + ') error');
@@ -431,17 +447,17 @@ var popUp = {
 
   messageCount : function (countFrom) {
 
-    $GDMessageContainer.empty();
-    $GDMessageContainer.append('<h1 id="counter" />');
-    $GDMessageContainer.append('<h1 id="scoreOne">0</div>');
-    $GDMessageContainer.append('<h1 id="scoreTwo">0</div>');
-    $GDMessageContainer.append('<h2 id="hitOne">0</div>');
-    $GDMessageContainer.append('<h2 id="hitTwo">0</div>');
-    $GDMessageContainer.append('<h2 id="healthOne">0</div>');
-    $GDMessageContainer.append('<h2 id="healthTwo">0</div>');
-    $GDMessageContainer.append('<h2 id="powerOne">0</div>');
-    $GDMessageContainer.append('<h2 id="powerTwo">0</div>');
-    $counter = $('#counter');
+    // $GDMessageContainer.empty();
+    // $GDMessageContainer.append('<h1 id="counter" />');
+    // $GDMessageContainer.append('<h1 id="scoreOne">0</div>');
+    // $GDMessageContainer.append('<h1 id="scoreTwo">0</div>');
+    // $GDMessageContainer.append('<h2 id="hitOne">0</div>');
+    // $GDMessageContainer.append('<h2 id="hitTwo">0</div>');
+    // $GDMessageContainer.append('<h2 id="healthOne">0</div>');
+    // $GDMessageContainer.append('<h2 id="healthTwo">0</div>');
+    // $GDMessageContainer.append('<h2 id="powerOne">0</div>');
+    // $GDMessageContainer.append('<h2 id="powerTwo">0</div>');
+    $counter = $('#fight');
     $scoreOne = $('#scoreOne');
     $scoreTwo = $('#scoreTwo');
     $hitOne = $('#hitOne');
@@ -450,6 +466,7 @@ var popUp = {
     $healthTwo = $('#healthTwo');
     $powerOne = $('#powerOne');
     $powerTwo = $('#powerTwo');
+
     
     console.log('ready for countdown')
 
@@ -460,16 +477,18 @@ var popUp = {
   messageCountDown : function (countFrom) {
 
     console.log(countFrom)
+
+    popCrowd.crowdBase();
     
     if (countFrom > 0) {
       $counter.html(countFrom);
       countFrom -= 1;
       setTimeout(function () {
         popUp.messageCountDown(countFrom)
-      }, 1000);
+      }, 500);
       console.log('counting down' + countFrom)
     } else {
-      $counter.html('FIGHT');
+      $counter.html('FIGHT!');
       domGame.turn(); 
       console.log('fight started')
     };
@@ -499,6 +518,26 @@ var popCrowd = {
   },
   crowdShow : function () {
     $domCrowd.fadeIn(1000);
+  },
+  crowdBase : function () {
+    $domCrowd.addClass('crowdBase')
+    setInterval(function () {
+      $domCrowd.toggleClass('crowdBaseTwo')
+    }, 500)
+  },
+  crowdCheer : function (time) {
+    console.log('cheer')
+    $domCrowd.addClass('crowdCheer')
+    
+    agitation = window.setInterval(function () {
+      $domCrowd.toggleClass('crowdCheerTwo')
+    }, 400);
+    setTimeout(function () {
+      console.log(time)
+      window.clearInterval(agitation)
+      $domCrowd.removeClass('crowdCheer')
+      $domCrowd.removeClass('crowdCheerTwo')
+    }, time)
   }
 };
 

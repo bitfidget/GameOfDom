@@ -53,9 +53,21 @@ img.domCloned{
   position: absolute;
   display: block;
   z-index: 1000000;
-  background: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.5);
   top: 0;
   left: 0;
+}
+.crowdBase{
+  background: rgba(0,0,0,0.2);
+}
+.crowdBaseTwo{
+  background: rgba(0,0,0,0.8);
+}
+.crowdCheer{
+  background: rgba(255,0,0,0.2);
+}
+.crowdCheerTwo{
+  background: rgba(255,0,0,0.8);
 }
 
 /* the popup boxes */
