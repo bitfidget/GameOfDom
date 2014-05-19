@@ -25,7 +25,8 @@ ActiveRecord::Schema.define(version: 20140514052410) do
   end
 
   create_table "divs", force: true do |t|
-    t.string   "content"
+    t.text     "content"
+    t.string   "element"
     t.integer  "page_id"
     t.datetime "created_at"
     t.datetime "updated_at"

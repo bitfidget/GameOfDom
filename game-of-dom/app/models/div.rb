@@ -3,7 +3,8 @@
 # Table name: divs
 #
 #  id         :integer          not null, primary key
-#  content    :string(255)
+#  content    :text
+#  element    :string(255)
 #  page_id    :integer
 #  created_at :datetime
 #  updated_at :datetime

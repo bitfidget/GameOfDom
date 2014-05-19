@@ -1,0 +1,34 @@
+<h1>Dom Cage Fight</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>Winning Element</th>
+      <th>Losing Element</th>
+      <th>Content</th>
+      <th>favicon</th>
+      <th>URL</th>
+      <th>Page</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @battles.each do |battle| %>
+      <tr>
+        <th><%= battle.score %></th>
+        <th><%#= battle.winner.element %></th>
+        <th>
+          <% #battle.winner.conquests.each do |conquest| %>
+            <%#= conquest.element %>
+          <% #end %>
+        </th>
+        <th><%#= battle.winner.content %></th>
+        <th><%#= battle.winner.page.favicon %></th>
+        <th><%#= battle.winner.page.url %></th>
+        <th><%#= battle.winner.page.title %></th>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
