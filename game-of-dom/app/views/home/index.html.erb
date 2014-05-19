@@ -17,16 +17,16 @@
     <% @battles.each do |battle| %>
       <tr>
         <th><%= battle.score %></th>
-        <th><%#= battle.winner.element %></th>
+        <th><%= battle.winner.element %></th>
         <th>
-          <% #battle.winner.conquests.each do |conquest| %>
-            <%#= conquest.element %>
-          <% #end %>
+          <% battle.winner.conquests.each do |conquest| %>
+            <%= conquest.element %>
+          <% end %>
         </th>
-        <th><%#= battle.winner.content %></th>
-        <th><%#= battle.winner.page.favicon %></th>
-        <th><%#= battle.winner.page.url %></th>
-        <th><%#= battle.winner.page.title %></th>
+        <th><%= battle.winner.content %></th>
+        <th><%= battle.winner.page.favicon %></th>
+        <th><%= battle.winner.page.url %></th>
+        <th><%= battle.winner.page.title %></th>
       </tr>
     <% end %>
   </tbody>

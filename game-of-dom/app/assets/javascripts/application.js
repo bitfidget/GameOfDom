@@ -14,6 +14,5 @@
 //= require jquery_ujs
 //= require_tree .
 
-// Vendor Files
-//= require game-of-dom
+
 

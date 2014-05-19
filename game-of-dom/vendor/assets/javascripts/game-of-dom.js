@@ -432,7 +432,7 @@ var domGame = {
       title : window.location.hostname
     }
     var thisWinner = {
-      //content : winner.shadow.get(0),
+      content : winner.shadow.get(0).outerHTML,
       element : winner.gameName
     }
     var thisLoser = {
